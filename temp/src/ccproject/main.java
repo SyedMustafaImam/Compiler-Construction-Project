@@ -15,7 +15,6 @@ public class main {
 
         
 
-        System.out.println("---------------Reading Input Form File-------------------\n\n");
         try{
         
         if(file.createNewFile()){
@@ -31,47 +30,15 @@ public class main {
         e.printStackTrace();
     }
 
-    // fileInformation();
-    writeToFile();
     readFromFile();
 
     }
 
-    public static void fileInformation(){
-        if(file.exists()){
-            System.out.println("File name : "+ file.getName());
-            System.out.println("Absolute path : " + file.getAbsolutePath());
-            System.out.println("IsWriteable : "+ file.canWrite());
-            System.out.println("IsReadable : "+ file.canRead());
-            System.out.println("File Size In Bytes : "+file.length());
 
-        }
-        else{
-            System.out.println("The file does not exits!");
-        }
-    }
-
-    public static void writeToFile () {
-      Scanner input = new Scanner(System.in);
-        try{
-            FileWriter writer = new FileWriter("test.txt");
-            String text;
-            
-            do{
-                text = input.nextLine();
-                writer.write(text);
-
-            }while(text.equalsIgnoreCase("quit()"));
-
-            writer.close();
-            System.out.println("Successfully Worte ot the file! ");
-        }catch(IOException e){
-            System.out.println("An Error Occured!");
-        }
-    }
 
     public static void readFromFile(){
        
+        System.out.println("\n---------------Reading Input Form File-------------------\n\nOutput:\n");
        
         try {
         
