@@ -13,8 +13,13 @@ public class main {
     static File file = new File("test.txt");
     public static void main(String[] args)  {
 
-        
-
+    System.out.println("\n*************Welcome to Text Reader**********\n\n");   
+    System.out.println("Creating or Finding Fil...\n");
+    for(float i=0; i<=10;i++){
+    for(float j=0; j<=10; j++){		    
+		    
+		    j=j+1;
+    }}
         try{
         
         if(file.createNewFile()){
@@ -38,7 +43,7 @@ public class main {
 
     public static void readFromFile(){
        
-        System.out.println("\n---------------Reading Input Form File-------------------\n\nOutput:\n");
+       System.out.println("\n---------------Reading Input Form File-------------------\n\nOutput:\n");
        
         try {
         
