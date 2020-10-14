@@ -14,7 +14,7 @@ public class main {
     public static void main(String[] args)  {
 
     System.out.println("\n*************Welcome to Text Reader**********\n\n");   
-    System.out.println("Creating or Finding Fil...\n");
+    System.out.println("Creating or Finding File...\n");
     for(float i=0; i<=10;i++){
     for(float j=0; j<=10; j++){		    
 		    
@@ -45,13 +45,21 @@ public class main {
        
        System.out.println("\n---------------Reading Input Form File-------------------\n\nOutput:\n");
        
-        try {
         
+
+        try {
         Scanner reader = new Scanner(file);
         while(reader.hasNextLine()){
-            String data = reader.nextLine();
-            System.out.println(data);
+            int i= 0;
+            String  data = reader.nextLine();
+    for(i=0; i<data.length();i++){
+        System.out.println(data.charAt(i));
+
+
+    }        
         }  
+
+        
        } catch (FileNotFoundException e) {
            System.out.println("Error encounterd!");
     }
