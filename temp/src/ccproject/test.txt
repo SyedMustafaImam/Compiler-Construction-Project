@@ -1,5 +1,8 @@
-/* This is my Comment */
+/* This is my Orignal Txt File */
 
-Hello this is Mustafa
+printf(hello world);
+
+for in i <= pos;
 
 // this is made by mustafa
+

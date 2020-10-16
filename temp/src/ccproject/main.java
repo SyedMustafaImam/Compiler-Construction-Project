@@ -1,12 +1,14 @@
 package temp;
 
 import java.util.*;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOError;
 import java.io.IOException;
+import java.nio.Buffer;
 
 public class main {
     static File file = new File("test.txt");
@@ -35,7 +37,16 @@ public class main {
             e.printStackTrace();
         }
 
-        readFromFile();
+        // readFromFile();
+
+        String source = readFile("test.txt");    
+
+        String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\n|\t| ", "");
+        for(int i =0 ; i<rep.length();i++){
+
+            System.out.println(rep.charAt(i));
+        }
+
 
     }
 
@@ -45,31 +56,53 @@ public class main {
         System.out.println("\n---------------Ignoring Comments-------------------\n\nOutput:\n");
 
         try {
-            Scanner reader = new Scanner(file);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            int c = 0;
             
-            int i = 0;
-            String data = reader.nextLine();
-            for (i = 0; i < data.length(); i++) {
+            while((c = br.read()) != -1)         
+            {      
+                  char character = (char) c;        
+                  System.out.println(br.read());       
 
-                if (data.charAt(i) == '/') {
-
-                    i++;
-                }
-                if (data.charAt(i) == '*') {
-                    i++;
-                    while (data.charAt(i) == '*' && data.charAt(i) == '/') {
-                        i++;
-                    }
-
-                }
-
-                System.out.println(data.charAt(i));
-
+                  
+                  System.out.println(character);       
             }
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("Error encounterd!");
         }
 
     }
+
+    static String readFile(String fileName) {    
+        System.out.println("\n---------------Reading Input Form File-------------------");
+        System.out.println("\n---------------Ignoring Comments-------------------\n\nOutput:\n");
+
+        File file = new File(fileName);    
+
+        char[] buffer = null;    
+
+        try {    
+                BufferedReader bufferedReader = new BufferedReader( new FileReader(file));    
+
+                buffer = new char[(int)file.length()];    
+
+                int i = 0;    
+                int c = bufferedReader.read();    
+
+                while (c != -1) {    
+                    buffer[i++] = (char)c;   
+                    c = bufferedReader.read();
+
+
+                }    
+
+        } catch (IOException e) {    
+            e.printStackTrace();    
+        }    
+
+        return new String(buffer);    
+    }    
+
 }
