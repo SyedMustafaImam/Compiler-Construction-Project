@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOError;
 import java.io.IOException;
+import java.io.StreamCorruptedException;
 import java.nio.Buffer;
 
 public class main {
@@ -41,12 +42,13 @@ public class main {
 
         String source = readFile("test.txt");    
 
-        String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\n|\t| |\n", "");
+        String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|(\n)|' '", "");
         for(int i =0 ; i<rep.length();i++){
 
             System.out.println(rep.charAt(i));
         }
 
+        // identifyReloc(rep);
 
     }
 
@@ -104,5 +106,20 @@ public class main {
 
         return new String(buffer);    
     }    
+
+    static void identifyReloc(String stname){
+
+String[] strarr = new String[stname.length()] ;
+        for(int i=0; i<stname.length();i++){
+            strarr[i]= Character.toString(stname.charAt(i));
+
+        }
+
+        for(int j=0; j<strarr.length;j++){
+        System.out.println(strarr[j]);
+        }
+
+         
+    }
 
 }
