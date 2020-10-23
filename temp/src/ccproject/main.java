@@ -41,7 +41,7 @@ public class main {
 
         String source = readFile("test.txt");    
 
-        String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\n|\t| ", "");
+        String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\n|\t| |\n", "");
         for(int i =0 ; i<rep.length();i++){
 
             System.out.println(rep.charAt(i));
