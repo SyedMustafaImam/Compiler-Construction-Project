@@ -14,7 +14,7 @@ import java.nio.Buffer;
 public class main {
     static File file = new File("test.txt");
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         System.out.println("\n*************Welcome to Text Reader**********\n\n");
         System.out.println("Creating or Finding File...\n");
@@ -33,22 +33,24 @@ public class main {
                 System.out.println("File already exist.");
             }
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.out.print("Got into an error!");
             e.printStackTrace();
         }
 
         // readFromFile();
 
-        String source = readFile("test.txt");    
+        final String source = readFile("test.txt");
 
-        String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|(\n)|' '", "");
-        for(int i =0 ; i<rep.length();i++){
+        final String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|(\\n)|' '| |\\s|", "");
 
-            System.out.println(rep.charAt(i));
-        }
-
-        // identifyReloc(rep);
+        // For Printing the String
+        /*
+         * for(int i =0 ; i<rep.length();i++){
+         * 
+         * System.out.println(rep.charAt(i)); }
+         */
+        identifyReloc(stringToArray(rep));
 
     }
 
@@ -58,68 +60,91 @@ public class main {
         System.out.println("\n---------------Ignoring Comments-------------------\n\nOutput:\n");
 
         try {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+            final FileReader fr = new FileReader(file);
+            final BufferedReader br = new BufferedReader(fr);
             int c = 0;
-            
-            while((c = br.read()) != -1)         
-            {      
-                  char character = (char) c;        
-                  System.out.println(br.read());       
 
-                  
-                  System.out.println(character);       
+            while ((c = br.read()) != -1) {
+                final char character = (char) c;
+                System.out.println(br.read());
+
+                System.out.println(character);
             }
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.out.println("Error encounterd!");
         }
 
     }
 
-    static String readFile(String fileName) {    
+    static String readFile(final String fileName) {
         System.out.println("\n---------------Reading Input Form File-------------------");
         System.out.println("\n---------------Ignoring Comments-------------------\n\nOutput:\n");
 
-        File file = new File(fileName);    
+        final File file = new File(fileName);
 
-        char[] buffer = null;    
+        char[] buffer = null;
 
-        try {    
-                BufferedReader bufferedReader = new BufferedReader( new FileReader(file));    
+        try {
+            final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
-                buffer = new char[(int)file.length()];    
+            buffer = new char[(int) file.length()];
 
-                int i = 0;    
-                int c = bufferedReader.read();    
+            int i = 0;
+            int c = bufferedReader.read();
 
-                while (c != -1) {    
-                    buffer[i++] = (char)c;   
-                    c = bufferedReader.read();
+            while (c != -1) {
+                buffer[i++] = (char) c;
+                c = bufferedReader.read();
 
+            }
 
-                }    
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
 
-        } catch (IOException e) {    
-            e.printStackTrace();    
-        }    
+        return new String(buffer);
+    }
 
-        return new String(buffer);    
-    }    
+    static String[] stringToArray(final String stname) {
 
-    static void identifyReloc(String stname){
-
-String[] strarr = new String[stname.length()] ;
+        final String[] strarr = new String[stname.length()];
         for(int i=0; i<stname.length();i++){
             strarr[i]= Character.toString(stname.charAt(i));
 
         }
+// For Printing An Array
 
-        for(int j=0; j<strarr.length;j++){
+/*        for(int j=0; j<strarr.length;j++){
         System.out.println(strarr[j]);
         }
+*/
+        return strarr;
 
-         
     }
 
+    static void identifyReloc(String[] strarr){
+
+       int arrayLength = strarr.length;
+        for(int i=0; i<arrayLength;i++){
+            
+            if(strarr[i].equals("=")||strarr[i].equals(">")||strarr[i].equals("<")){
+                i++;
+                String d1 = strarr[i-1];
+                if(strarr[i].equals("=")||strarr[i].equals(">")||strarr[i].equals("<")){ 
+                    String d2 = strarr[i];
+                    strarr[i]=d1 + d2 + "\t Reloc Identified!";
+                    
+                }else{
+                    continue;
+                }
+                
+            }
+            System.out.println(strarr[i]);
+
+
+
+            }
+    
+    }
 }

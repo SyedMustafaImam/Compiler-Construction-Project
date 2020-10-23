@@ -1,8 +1,12 @@
 /* This is my Orignal Txt File */
 
 printf(hello world);
-
-for in i <= pos;
-
+int i = 0;
+for in i <= pos
+{
+    if(me>=oldMe){
+    println();
+    }
+    }
 // this is made by mustafa
 
