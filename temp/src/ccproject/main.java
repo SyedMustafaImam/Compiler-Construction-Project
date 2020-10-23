@@ -123,23 +123,60 @@ public class main {
 
     }
 
-    static void identifyReloc(String[] strarr){
+    static void identifyReloc(final String[] strarr) {
 
-       int arrayLength = strarr.length;
-        for(int i=0; i<arrayLength;i++){
-            
-            if(strarr[i].equals("=")||strarr[i].equals(">")||strarr[i].equals("<")){
+        final int arrayLength = strarr.length;
+        for (int i = 0; i < arrayLength; i++) {
+
+            if (strarr[i].equals("=") || strarr[i].equals(">") || strarr[i].equals("<")) {
                 i++;
-                String d1 = strarr[i-1];
-                if(strarr[i].equals("=")||strarr[i].equals(">")||strarr[i].equals("<")){ 
-                    String d2 = strarr[i];
-                    strarr[i]=d1 + d2 + "\t Reloc Identified!";
-                    
+                if (strarr[i].equals("=") || strarr[i].equals(">") || strarr[i].equals("<")) {
+                    final String d1 = strarr[i - 1];
+                    final String d2 = strarr[i];
+
+                    if((d1+d2).equals("<=")){
+                    strarr[i]=d1 + d2 + "\tLE --Relop Identified!";
+                 
+                }
+
+
+                if((d1+d2).equals(">=")){
+                    strarr[i]=d1 + d2 + "\tGE --Relop Identified!";
+                 
+                }
+
+                if((d1+d2).equals("==")){
+                    strarr[i]=d1 + d2 + "\tEQ --Relop Identified!";
+                 
+                }
+
                 }else{
-                    continue;
+                    i--;
+                }
+            }
+
+              
+
+                if(strarr[i].equals(">")||strarr[i].equals("<")){ 
+                    if(strarr[i].equals(">")){
+                        String f1 = strarr[i];
+                    strarr[i]=f1 +  "\tGT --Relop Identified!";
+                    i--;
+
+                }
+
+                if(strarr[i].equals("<")){
+                    String f2 = strarr[i];
+                    strarr[i]=f2 +  "\tLT --Relop Identified!";
+                    i--;
                 }
                 
+                else{
+                    
+                    continue;
+                }
             }
+    
             System.out.println(strarr[i]);
 
 
