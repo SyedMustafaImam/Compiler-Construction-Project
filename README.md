@@ -16,13 +16,13 @@ then run the following commands: </br>
 <ol start = "1">
 <li>Begin</li>
 <li>End</li>
-<li>String</li>
-<li>If</li>
-<li>Then</li>
+<li>if</li>
 <li>else</li>
+<li>Then</li>
 <li>Int</li>
 <li>Float</li>
 <li>Char</li>
+<li>String</li>
 
 
 
