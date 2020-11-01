@@ -1,12 +1,37 @@
-/* This is my Orignal Txt File */
+// This is my Orignal Txt File
 
-// int i = 0;
-for in i <= pos
-{
-    if(me>=old){
-    print( age < 22 &&  age> 20);
-    }
-    my age == 21;
-    }
+Begin
+
+Int var1 = 0
+
+if(var1 !=0 ) Then
+
+print("not equal to zero")
+
+else 
+
+String = str 
+
+for(Float i=0;i<=1;i++){
+Char[] arry =  new Array;
+if(arry>var1){
+
+End
+}
+// Keywords 
+//---------------
+/*
+Begin
+End
+if
+Then
+else
+Int
+Float
+Char
+String 
+in
+*/
+
 // this is made by mustafa
 
