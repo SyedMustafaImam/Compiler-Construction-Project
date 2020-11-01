@@ -1,1 +1,12 @@
-Hello this is Mustafa
+/* This is my Orignal Txt File */
+
+// int i = 0;
+for in i <= pos
+{
+    if(me>=old){
+    print( age < 22 &&  age> 20);
+    }
+    my age == 21;
+    }
+// this is made by mustafa
+
