@@ -47,13 +47,14 @@ public class main {
         final String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|(\\n)|' '| |\\s|", "");
 
         // For Printing the String
-        
-        /* for(int i =0 ; i<rep.length();i++){
-         
-         System.out.println(rep.charAt(i)); }
-         
-        */
-         identifyReloc(stringToArray(rep));
+
+        /*
+         * for(int i =0 ; i<rep.length();i++){
+         * 
+         * System.out.println(rep.charAt(i)); }
+         * 
+         */
+        identifyReloc(stringToArray(rep));
 
     }
 
@@ -176,19 +177,114 @@ public class main {
                 }
             }
 
+            // Identifying Operators
+            if (strarr[i].equals("+")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --ADD Arop Identified!");
+                continue;
+
+            }
+            if (strarr[i].equals("-")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --SUB Arop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("*")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --MUL Arop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("/")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --DIV Arop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("-")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --SUB Arop Identified!");
+                continue;
+
+            }
+
+            // Identifing Other Operators OTOP
+
+            if (strarr[i].equals("=")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --ASN Otop Identified!");
+                continue;
+
+            }
+
+            
+            if (strarr[i].equals("(")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --LPRN Otop Identified!");
+                continue;
+
+            }
+
+            
+            if (strarr[i].equals(")")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --RPRN Otop Identified!");
+                continue;
+
+            }
+
+            
+            if (strarr[i].equals("{")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --LBRC Otop Identified!");
+                continue;
+
+            }
+
+            
+            if (strarr[i].equals("}")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --RBRC Otop Identified!");
+                continue;
+
+            }
+
+            
+            if (strarr[i].equals(";")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --LNTR Otop Identified!");
+                continue;
+
+            }
+
             // Identifing Keywords
 
             if (strarr[i].equals("e")) {
-                i++;
-                if (strarr[i].equals("l")) {
-                    i++;
-                    if (strarr[i].equals("s")) {
-                        i++;
-                        if (strarr[i].equals("e")) {
-                            
+
+                if (strarr[i + 1].equals("l")) {
+
+                    if (strarr[i + 2].equals("s")) {
+
+                        if (strarr[i + 3].equals("e")) {
+                            i = i + 3;
 
                             String key5 = "else";
-                            strarr[i] = key5 + "\t--Keyword "+ keyid + " Identified" ;
+                            strarr[i] = key5 + "\t--Keyword " + keyid + " Identified";
                             keyid++;
 
                         }
@@ -197,17 +293,18 @@ public class main {
             }
 
             if (strarr[i].equals("B")) {
-                i++;
-                if (strarr[i].equals("e")) {
-                    i++;
-                    if (strarr[i].equals("g")) {
-                        i++;
-                        if (strarr[i].equals("i")) {
-                            i++;
-                            if (strarr[i].equals("n")) {
+
+                if (strarr[i + 1].equals("e")) {
+
+                    if (strarr[i + 2].equals("g")) {
+
+                        if (strarr[i + 3].equals("i")) {
+
+                            if (strarr[i + 4].equals("n")) {
+                                i = i + 4;
 
                                 String key1 = "Begin";
-                                strarr[i] = key1 + "\t--Keyword "+ keyid + " Identified";
+                                strarr[i] = key1 + "\t--Keyword " + keyid + " Identified";
                                 keyid++;
 
                             }
@@ -221,42 +318,37 @@ public class main {
             }
 
             if (strarr[i].equals("E")) {
-                i++;
-                if (strarr[i].equals("n")) {
-                    i++;
-                    
-                    if (strarr[i].equals("d")) {
 
+                if (strarr[i + 1].equals("n")) {
+
+                    if (strarr[i + 2].equals("d")) {
+                        i = i + 2;
                         String key2 = "End";
-                        strarr[i] = key2 + "\t--Keyword "+ keyid + " Identified";
+                        strarr[i] = key2 + "\t--Keyword " + keyid + " Identified";
                         keyid++;
 
                     }
                 }
             }
-
             if (strarr[i].equals("i")) {
-                
-              
-                if (strarr[i+1].equals("f")) {
+
+                if (strarr[i + 1].equals("f")) {
                     i++;
                     String key3 = "i" + "f";
-                    strarr[i] = key3 + "\t--Keyword "+ keyid + " Identified";
+                    strarr[i] = key3 + "\t--Keyword " + keyid + " Identified";
                     keyid++;
 
                 }
             }
 
             if (strarr[i].equals("T")) {
-                i++;
-                if (strarr[i].equals("h")) {
-                    i++;
-                    if (strarr[i].equals("e")) {
-                        i++;
-                        if (strarr[i].equals("n")) {
+                if (strarr[i + 1].equals("h")) {
+                    if (strarr[i + 2].equals("e")) {
+                        if (strarr[i + 3].equals("n")) {
+                            i = i + 3;
 
                             String key4 = "Then";
-                            strarr[i] = key4 + "\t--Keyword "+ keyid + " Identified";
+                            strarr[i] = key4 + "\t--Keyword " + keyid + " Identified";
                             keyid++;
 
                         }
@@ -267,35 +359,29 @@ public class main {
 
             }
 
-          
-
             if (strarr[i].equals("I")) {
-                i++;
-                if (strarr[i].equals("n")) {
-                    i++;
-                    if (strarr[i].equals("t")) {
+                if (strarr[i + 1].equals("n")) {
+                    if (strarr[i + 2].equals("t")) {
+                        i = i + 2;
 
                         String key6 = "Int";
-                        strarr[i] = key6 + "\t--Keyword "+ keyid + " Identified";
+                        strarr[i] = key6 + "\t--Keyword " + keyid + " Identified";
                         keyid++;
 
                     }
                 }
-               
+
             }
 
             if (strarr[i].equals("F")) {
-                i++;
-                if (strarr[i].equals("l")) {
-                    i++;
-                    if (strarr[i].equals("o")) {
-                        i++;
-                        if (strarr[i].equals("a")) {
-                            i++;
-                            if (strarr[i].equals("t")) {
+                if (strarr[i + 1].equals("l")) {
+                    if (strarr[i + 2].equals("o")) {
+                        if (strarr[i + 3].equals("a")) {
+                            if (strarr[i + 4].equals("t")) {
+                                i = i + 4;
 
                                 String key7 = "Float";
-                                strarr[i] = key7 + "\t--Keyword "+ keyid + " Identified";
+                                strarr[i] = key7 + "\t--Keyword " + keyid + " Identified";
                                 keyid++;
 
                             }
@@ -305,16 +391,13 @@ public class main {
             }
 
             if (strarr[i].equals("C")) {
-                i++;
-                if (strarr[i].equals("h")) {
-                    i++;
-                    if (strarr[i].equals("a")) {
-                        i++;
-                        if (strarr[i].equals("r")) {
-                            
+                if (strarr[i + 1].equals("h")) {
+                    if (strarr[i + 2].equals("a")) {
+                        if (strarr[i + 3].equals("r")) {
+                            i = i + 3;
 
                             String key8 = "Char";
-                            strarr[i] = key8 + "\t--Keyword "+ keyid + " Identified";
+                            strarr[i] = key8 + "\t--Keyword " + keyid + " Identified";
                             keyid++;
 
                         }
@@ -323,19 +406,15 @@ public class main {
             }
 
             if (strarr[i].equals("S")) {
-                i++;
-                if (strarr[i].equals("t")) {
-                    i++;
-                    if (strarr[i].equals("r")) {
-                        i++;
-                        if (strarr[i].equals("i")) {
-                            i++;
-                            if (strarr[i].equals("n")) {
-                                i++;
-                                if (strarr[i].equals("g")) {
+                if (strarr[i + 1].equals("t")) {
+                    if (strarr[i + 2].equals("r")) {
+                        if (strarr[i + 3].equals("i")) {
+                            if (strarr[i + 4].equals("n")) {
+                                if (strarr[i + 5].equals("g")) {
+                                    i = i + 5;
 
                                     String key9 = "String";
-                                    strarr[i] = key9 + "\t--Keyword "+ keyid + " Identified";
+                                    strarr[i] = key9 + "\t--Keyword " + keyid + " Identified";
                                     keyid++;
 
                                 }
