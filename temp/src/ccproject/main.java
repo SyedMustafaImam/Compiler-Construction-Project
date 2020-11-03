@@ -227,7 +227,6 @@ public class main {
 
             }
 
-            
             if (strarr[i].equals("(")) {
                 String arop = strarr[i];
 
@@ -236,7 +235,6 @@ public class main {
 
             }
 
-            
             if (strarr[i].equals(")")) {
                 String arop = strarr[i];
 
@@ -245,7 +243,6 @@ public class main {
 
             }
 
-            
             if (strarr[i].equals("{")) {
                 String arop = strarr[i];
 
@@ -254,7 +251,6 @@ public class main {
 
             }
 
-            
             if (strarr[i].equals("}")) {
                 String arop = strarr[i];
 
@@ -263,7 +259,6 @@ public class main {
 
             }
 
-            
             if (strarr[i].equals(";")) {
                 String arop = strarr[i];
 
@@ -402,29 +397,6 @@ public class main {
 
                         }
                     }
-                }
-            }
-
-            if (strarr[i].equals("S")) {
-                if (strarr[i + 1].equals("t")) {
-                    if (strarr[i + 2].equals("r")) {
-                        if (strarr[i + 3].equals("i")) {
-                            if (strarr[i + 4].equals("n")) {
-                                if (strarr[i + 5].equals("g")) {
-                                    i = i + 5;
-
-                                    String key9 = "String";
-                                    strarr[i] = key9 + "\t--Keyword " + keyid + " Identified";
-                                    keyid++;
-
-                                }
-
-                            }
-
-                        }
-
-                    }
-
                 }
             }
 
