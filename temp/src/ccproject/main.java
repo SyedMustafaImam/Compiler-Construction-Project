@@ -438,7 +438,8 @@ public class main {
             }
             }
 
-            System.out.println(strarr[i]);
+            System.out.println(strarr[i].replaceAll("\n|\t|\\s", ""));
+            
 
         }
 

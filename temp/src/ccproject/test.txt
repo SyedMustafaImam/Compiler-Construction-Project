@@ -1,22 +1,15 @@
 // This is my Orignal Txt File
 begining;
-
 else
 eelsee
-
 int var1 = 0;
-
 if(var1 !=0 ) then
 print("not - equal * to / zero");
-
 else;
-
 string  str;
-
 for(float i=0;i<=1;i++){
 char arr = [1,2];
 if(charrry>var1){
-
 end;
 }
 }
