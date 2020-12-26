@@ -19,16 +19,46 @@ import java.util.Scanner;
 public class FilingFunctions {
 
    File file = new File("test.txt");
-
-    public void readingFile(){
+   
+   String fileName = "test.txt";
+   
+    public void printngFile(){
     
-        System.out.println("\n*************Welcome to Text Reader**********\n\n");   
+       
+       
+        String source = removeComments(fileName);
+        
+      
+          for(int i =0 ; i<source.length();i++){
+          
+          System.out.print(source.charAt(i)); }
+          
+         
+    
+    }
+    
+    public String removeComments(String fileName){
+
+         String inputStr = readFile(fileName);
+         
+         String rem_comments = inputStr.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|", "");
+
+         
+         return rem_comments;
+     }
+    
+    
+    public String readFile(String fileName) {
+                        System.out.println("\n*************Welcome to Text Reader**********\n\n");   
+
+        System.out.println("\n---------------Reading Input Form File-------------------");
+
+        final File file = new File(fileName);
+
+        char[] buffer = null;
+
     System.out.println("Creating or Finding File...\n");
-    for(float i=0; i<=10;i++){
-    for(float j=0; j<=10; j++){		    
-		    
-		    j=j+1;
-    }}
+   
         try{
         
         if(file.createNewFile()){
@@ -44,52 +74,9 @@ public class FilingFunctions {
         e.printStackTrace();
     }
 
-        String source = readFile("test.txt");
         
-        
-          for(int i =0 ; i<source.length();i++){
-          
-          System.out.println(source.charAt(i)); }
-          
-         
-    
-    }
-    
-    public  void readFromFile(){
-       
-       System.out.println("\n---------------Reading Input Form File-------------------\n\nOutput:\n");
-       
-        
-
         try {
-        Scanner reader = new Scanner(file);
-        while(reader.hasNextLine()){
-            int i= 0;
-            String  data = reader.nextLine();
-    for(i=0; i<data.length();i++){
-        System.out.println(data.charAt(i));
-
-
-    }        
-        }  
-
-        
-       } catch (FileNotFoundException e) {
-           System.out.println("Error encounterd!");
-    }
-    
-}
-    
-    static String readFile(final String fileName) {
-        System.out.println("\n---------------Reading Input Form File-------------------");
-        System.out.println("\n---------------Ignoring Comments-------------------\n\nOutput:\n");
-
-        final File file = new File(fileName);
-
-        char[] buffer = null;
-
-        try {
-            final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
             buffer = new char[(int) file.length()];
 
@@ -99,6 +86,7 @@ public class FilingFunctions {
             while (c != -1) {
                 buffer[i++] = (char) c;
                 c = bufferedReader.read();
+               
 
             }
 

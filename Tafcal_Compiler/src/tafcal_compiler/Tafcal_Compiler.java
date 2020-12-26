@@ -4,18 +4,8 @@
  * and open the template in the editor.
  */
 package tafcal_compiler;
-import java.util.*;
 
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOError;
-import java.io.IOException;
-/**
- *
- * @author cs181
- */
+ 
 public class Tafcal_Compiler {
 
     /**
@@ -26,7 +16,7 @@ public class Tafcal_Compiler {
 
         FilingFunctions filefun = new FilingFunctions();
         
-        filefun.readingFile();
+        filefun.printngFile();
     
     }
 
