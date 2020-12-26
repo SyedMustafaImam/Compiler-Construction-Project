@@ -2,8 +2,6 @@ package temp;
 
 import java.util.*;
 import java.util.function.BiConsumer;
-
-
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
@@ -46,7 +44,12 @@ public class main {
 
         final String source = readFile("test.txt");
 
-        final String rem_comments = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|", "");
+        final String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|(\\n)|' '| |\\s|", "");
+
+        ?:/\\*
+        (?:[^*]|(?:\\*+[^*/]))*\\*+/)
+
+
 
         // For Printing the String
 
@@ -56,7 +59,7 @@ public class main {
          * System.out.println(rep.charAt(i)); }
          * 
          */
-        identifyReloc(stringToArray(rem_comments));
+        identifyReloc(stringToArray(rep));
 
     }
 
@@ -278,19 +281,18 @@ public class main {
                     if (strarr[i + 2].equals("s")) {
 
                         if (strarr[i + 3].equals("e")) {
-                            if (Character.isWhitespace(strarr[i + 4].charAt(0))||strarr[i + 4].equals("{")) {
                             i = i + 3;
 
                             String key5 = "else";
                             strarr[i] = key5 + "\t--Keyword " + keyid + " Identified";
                             keyid++;
 
-                        }}
+                        }
                     }
                 }
             }
 
-            if (strarr[i].equals("b")) {
+            if (strarr[i].equals("B")) {
 
                 if (strarr[i + 1].equals("e")) {
 
@@ -299,11 +301,9 @@ public class main {
                         if (strarr[i + 3].equals("i")) {
 
                             if (strarr[i + 4].equals("n")) {
-                                
-                                if (Character.isWhitespace(strarr[i + 5].charAt(0))||strarr[i + 5].equals(";")) {
                                 i = i + 4;
 
-                                String key1 = "begin";
+                                String key1 = "Begin";
                                 strarr[i] = key1 + "\t--Keyword " + keyid + " Identified";
                                 keyid++;
 
@@ -314,49 +314,44 @@ public class main {
                     }
 
                 }
-            }
 
             }
 
-            if (strarr[i].equals("e")) {
+            if (strarr[i].equals("E")) {
 
                 if (strarr[i + 1].equals("n")) {
 
                     if (strarr[i + 2].equals("d")) {
-                        if (Character.isWhitespace(strarr[i + 3].charAt(0))||strarr[i + 3].equals(";")) {
                         i = i + 2;
-                        String key2 = "end";
+                        String key2 = "End";
                         strarr[i] = key2 + "\t--Keyword " + keyid + " Identified";
                         keyid++;
-                        }
+
                     }
                 }
             }
             if (strarr[i].equals("i")) {
 
                 if (strarr[i + 1].equals("f")) {
-                    if (Character.isWhitespace(strarr[i + 2].charAt(0))||strarr[i + 2].equals("(")) {
-                    i=i+1;
+                    i++;
                     String key3 = "i" + "f";
                     strarr[i] = key3 + "\t--Keyword " + keyid + " Identified";
                     keyid++;
-                    }
+
                 }
             }
 
-            if (strarr[i].equals("t")) {
+            if (strarr[i].equals("T")) {
                 if (strarr[i + 1].equals("h")) {
                     if (strarr[i + 2].equals("e")) {
                         if (strarr[i + 3].equals("n")) {
-                            if (Character.isWhitespace(strarr[i + 4].charAt(0))||strarr[i + 4].equals(";")) {
                             i = i + 3;
 
-                            String key4 = "then";
+                            String key4 = "Then";
                             strarr[i] = key4 + "\t--Keyword " + keyid + " Identified";
                             keyid++;
 
                         }
-                    }
 
                     }
 
@@ -364,65 +359,61 @@ public class main {
 
             }
 
-            if (strarr[i].equals("i")) {
+            if (strarr[i].equals("I")) {
                 if (strarr[i + 1].equals("n")) {
                     if (strarr[i + 2].equals("t")) {
-                        if (Character.isWhitespace(strarr[i + 3].charAt(0))) {
-                        i = i + 3;
+                        i = i + 2;
 
-                        String key6 = "int";
+                        String key6 = "Int";
                         strarr[i] = key6 + "\t--Keyword " + keyid + " Identified";
                         keyid++;
-                        }
+
                     }
                 }
 
             }
 
-            if (strarr[i].equals("f")) {
+            if (strarr[i].equals("F")) {
                 if (strarr[i + 1].equals("l")) {
                     if (strarr[i + 2].equals("o")) {
                         if (strarr[i + 3].equals("a")) {
                             if (strarr[i + 4].equals("t")) {
-                                if (Character.isWhitespace(strarr[i + 5].charAt(0))) {
-                                i = i + 5;
+                                i = i + 4;
 
-                                String key7 = "float";
+                                String key7 = "Float";
                                 strarr[i] = key7 + "\t--Keyword " + keyid + " Identified";
                                 keyid++;
-                                }
+
                             }
                         }
                     }
                 }
             }
 
-            if (strarr[i].equals("c")) {
+            if (strarr[i].equals("C")) {
                 if (strarr[i + 1].equals("h")) {
                     if (strarr[i + 2].equals("a")) {
                         if (strarr[i + 3].equals("r")) {
-                            if (Character.isWhitespace(strarr[i + 4].charAt(0))) {
-                            i = i + 4;
+                            i = i + 3;
 
-                            String key8 = "char";
+                            String key8 = "Char";
                             strarr[i] = key8 + "\t--Keyword " + keyid + " Identified";
                             keyid++;
-                            }
+
                         }
                     }
                 }
             }
 
-            if (strarr[i].equals("s")) {
+            if (strarr[i].equals("S")) {
                 if (strarr[i + 1].equals("t")) {
                     if (strarr[i + 2].equals("r")) {
                         if (strarr[i + 3].equals("i")) {
                             if (strarr[i + 4].equals("n")) {
                                 if (strarr[i + 5].equals("g")) {
-                                    if (Character.isWhitespace(strarr[i + 6].charAt(0))) {
-                                    i = i + 6;
+                                    i = i + 5;
 
-                                    String key9 = "string";
+                                    String key9 = "String";
                                     strarr[i] = key9 + "\t--Keyword " + keyid + " Identified";
                                     keyid++;
 
@@ -436,10 +427,10 @@ public class main {
 
                 }
             }
-            }
-
-            System.out.println(strarr[i].replaceAll("\n|\t|\\s", ""));
+            // Identifying the identifiers
             
+
+            System.out.println(strarr[i]);
 
         }
 
