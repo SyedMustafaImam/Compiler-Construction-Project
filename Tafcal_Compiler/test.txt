@@ -1,28 +1,29 @@
 // This is my Orignal Txt File
-Begin;
-Int var1 = 0;
-if(var1 !=0 ) Then
-print("not - equal * to / zero");
-else;
-String  str;
-for(Float i=0;i<=1;i++){
-Char[] arry =  new Array;
-if(arry>var1){
-End;
+begin;
+int var1 = 0;
+if(var1 !=0 ) then
+var1 = 5+2;
+else{var1=5-2};
+string str;
+float i=0;
+if(i <=1)then{i++
+char arry = str;
+if( arry > var1 ){
+end;
 }
 }
 // Keywords 
 //---------------
 /*
-Begin
-End
+begin
+end
 if
-Then
+then
 else
-Int
-Float
-Char
-String 
+int
+float
+char
+string 
 */
 // this is made by mustafa
 

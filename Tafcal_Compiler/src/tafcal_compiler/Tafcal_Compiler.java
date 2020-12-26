@@ -14,11 +14,16 @@ public class Tafcal_Compiler {
 
     public static void main(String[] args)  {
 
-        FilingFunctions filefun = new FilingFunctions();
+        SyntaxAnalysis filefun = new SyntaxAnalysis();
         
         filefun.printngFile();
     
+        
+        
+    
     }
+    
+    
 
 
 
