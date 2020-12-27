@@ -1,6 +1,7 @@
 package temp;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,6 +11,7 @@ import java.io.IOError;
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.nio.Buffer;
+import java.security.Key;
 
 public class main {
     static File file = new File("test.txt");
@@ -44,11 +46,18 @@ public class main {
 
         final String rep = source.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|(\\n)|' '| |\\s|", "");
 
+        ?:/\\*
+        (?:[^*]|(?:\\*+[^*/]))*\\*+/)
+
+
+
         // For Printing the String
+
         /*
          * for(int i =0 ; i<rep.length();i++){
          * 
          * System.out.println(rep.charAt(i)); }
+         * 
          */
         identifyReloc(stringToArray(rep));
 
@@ -109,22 +118,21 @@ public class main {
     static String[] stringToArray(final String stname) {
 
         final String[] strarr = new String[stname.length()];
-        for(int i=0; i<stname.length();i++){
-            strarr[i]= Character.toString(stname.charAt(i));
+        for (int i = 0; i < stname.length(); i++) {
+            strarr[i] = Character.toString(stname.charAt(i));
 
         }
-// For Printing An Array
+        // For Printing An Array
 
-/*        for(int j=0; j<strarr.length;j++){
-        System.out.println(strarr[j]);
-        }
-*/
+        /*
+         * for(int j=0; j<strarr.length;j++){ System.out.println(strarr[j]); }
+         */
         return strarr;
 
     }
 
     static void identifyReloc(final String[] strarr) {
-
+        int keyid = 1;
         final int arrayLength = strarr.length;
         for (int i = 0; i < arrayLength; i++) {
 
@@ -134,54 +142,297 @@ public class main {
                     final String d1 = strarr[i - 1];
                     final String d2 = strarr[i];
 
-                    if((d1+d2).equals("<=")){
-                    strarr[i]=d1 + d2 + "\tLE --Relop Identified!";
-                 
-                }
+                    if ((d1 + d2).equals("<=")) {
+                        strarr[i] = d1 + d2 + "\tLE --Relop Identified!";
 
+                    }
 
-                if((d1+d2).equals(">=")){
-                    strarr[i]=d1 + d2 + "\tGE --Relop Identified!";
-                 
-                }
+                    if ((d1 + d2).equals(">=")) {
+                        strarr[i] = d1 + d2 + "\tGE --Relop Identified!";
 
-                if((d1+d2).equals("==")){
-                    strarr[i]=d1 + d2 + "\tEQ --Relop Identified!";
-                 
-                }
+                    }
 
-                }else{
+                    if ((d1 + d2).equals("==")) {
+                        strarr[i] = d1 + d2 + "\tEQ --Relop Identified!";
+
+                    }
+
+                } else {
                     i--;
                 }
             }
 
-              
-
-                if(strarr[i].equals(">")||strarr[i].equals("<")){ 
-                    if(strarr[i].equals(">")){
-                        String f1 = strarr[i];
-                    strarr[i]=f1 +  "\tGT --Relop Identified!";
+            if (strarr[i].equals(">") || strarr[i].equals("<")) {
+                if (strarr[i].equals(">")) {
+                    String f1 = strarr[i];
+                    strarr[i] = f1 + "\tGT --Relop Identified!";
                     i--;
 
                 }
 
-                if(strarr[i].equals("<")){
+                if (strarr[i].equals("<")) {
                     String f2 = strarr[i];
-                    strarr[i]=f2 +  "\tLT --Relop Identified!";
+                    strarr[i] = f2 + "\tLT --Relop Identified!";
                     i--;
                 }
-                
-                else{
-                    
+
+                else {
+
                     continue;
                 }
             }
-    
-            System.out.println(strarr[i]);
 
+            // Identifying Operators
+            if (strarr[i].equals("+")) {
+                String arop = strarr[i];
 
+                System.out.println(arop + "\t --ADD Arop Identified!");
+                continue;
 
             }
-    
+            if (strarr[i].equals("-")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --SUB Arop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("*")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --MUL Arop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("/")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --DIV Arop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("-")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --SUB Arop Identified!");
+                continue;
+
+            }
+
+            // Identifing Other Operators OTOP
+
+            if (strarr[i].equals("=")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --ASN Otop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("(")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --LPRN Otop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals(")")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --RPRN Otop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("{")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --LBRC Otop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals("}")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --RBRC Otop Identified!");
+                continue;
+
+            }
+
+            if (strarr[i].equals(";")) {
+                String arop = strarr[i];
+
+                System.out.println(arop + "\t --LNTR Otop Identified!");
+                continue;
+
+            }
+
+            // Identifing Keywords
+
+            if (strarr[i].equals("e")) {
+
+                if (strarr[i + 1].equals("l")) {
+
+                    if (strarr[i + 2].equals("s")) {
+
+                        if (strarr[i + 3].equals("e")) {
+                            i = i + 3;
+
+                            String key5 = "else";
+                            strarr[i] = key5 + "\t--Keyword " + keyid + " Identified";
+                            keyid++;
+
+                        }
+                    }
+                }
+            }
+
+            if (strarr[i].equals("B")) {
+
+                if (strarr[i + 1].equals("e")) {
+
+                    if (strarr[i + 2].equals("g")) {
+
+                        if (strarr[i + 3].equals("i")) {
+
+                            if (strarr[i + 4].equals("n")) {
+                                i = i + 4;
+
+                                String key1 = "Begin";
+                                strarr[i] = key1 + "\t--Keyword " + keyid + " Identified";
+                                keyid++;
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            if (strarr[i].equals("E")) {
+
+                if (strarr[i + 1].equals("n")) {
+
+                    if (strarr[i + 2].equals("d")) {
+                        i = i + 2;
+                        String key2 = "End";
+                        strarr[i] = key2 + "\t--Keyword " + keyid + " Identified";
+                        keyid++;
+
+                    }
+                }
+            }
+            if (strarr[i].equals("i")) {
+
+                if (strarr[i + 1].equals("f")) {
+                    i++;
+                    String key3 = "i" + "f";
+                    strarr[i] = key3 + "\t--Keyword " + keyid + " Identified";
+                    keyid++;
+
+                }
+            }
+
+            if (strarr[i].equals("T")) {
+                if (strarr[i + 1].equals("h")) {
+                    if (strarr[i + 2].equals("e")) {
+                        if (strarr[i + 3].equals("n")) {
+                            i = i + 3;
+
+                            String key4 = "Then";
+                            strarr[i] = key4 + "\t--Keyword " + keyid + " Identified";
+                            keyid++;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            if (strarr[i].equals("I")) {
+                if (strarr[i + 1].equals("n")) {
+                    if (strarr[i + 2].equals("t")) {
+                        i = i + 2;
+
+                        String key6 = "Int";
+                        strarr[i] = key6 + "\t--Keyword " + keyid + " Identified";
+                        keyid++;
+
+                    }
+                }
+
+            }
+
+            if (strarr[i].equals("F")) {
+                if (strarr[i + 1].equals("l")) {
+                    if (strarr[i + 2].equals("o")) {
+                        if (strarr[i + 3].equals("a")) {
+                            if (strarr[i + 4].equals("t")) {
+                                i = i + 4;
+
+                                String key7 = "Float";
+                                strarr[i] = key7 + "\t--Keyword " + keyid + " Identified";
+                                keyid++;
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (strarr[i].equals("C")) {
+                if (strarr[i + 1].equals("h")) {
+                    if (strarr[i + 2].equals("a")) {
+                        if (strarr[i + 3].equals("r")) {
+                            i = i + 3;
+
+                            String key8 = "Char";
+                            strarr[i] = key8 + "\t--Keyword " + keyid + " Identified";
+                            keyid++;
+
+                        }
+                    }
+                }
+            }
+
+            if (strarr[i].equals("S")) {
+                if (strarr[i + 1].equals("t")) {
+                    if (strarr[i + 2].equals("r")) {
+                        if (strarr[i + 3].equals("i")) {
+                            if (strarr[i + 4].equals("n")) {
+                                if (strarr[i + 5].equals("g")) {
+                                    i = i + 5;
+
+                                    String key9 = "String";
+                                    strarr[i] = key9 + "\t--Keyword " + keyid + " Identified";
+                                    keyid++;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+            // Identifying the identifiers
+            
+
+            System.out.println(strarr[i]);
+
+        }
+
     }
 }
