@@ -136,16 +136,28 @@ public class SyntaxAnalysis {
 
                     if ((d1 + d2).equals("<=")) {
                         strarr[i] = d1 + d2 + "\tLE --Relop Identified!";
+                        System.out.println(strarr[i]);
 
                     }
 
                     if ((d1 + d2).equals(">=")) {
                         strarr[i] = d1 + d2 + "\tGE --Relop Identified!";
+                        System.out.println(strarr[i]);
+
 
                     }
 
                     if ((d1 + d2).equals("==")) {
                         strarr[i] = d1 + d2 + "\tEQ --Relop Identified!";
+                                                System.out.println(strarr[i]);
+
+
+                    }
+                    
+                    if ((d1 + d2).equals("<>")) {
+                        strarr[i] = d1 + d2 + "\tNE --Relop Identified!";
+                                                System.out.println(strarr[i]);
+
 
                     }
 
@@ -158,6 +170,8 @@ public class SyntaxAnalysis {
                 if (strarr[i].equals(">")) {
                     String f1 = strarr[i];
                     strarr[i] = f1 + "\tGT --Relop Identified!";
+                                            System.out.println(strarr[i]);
+
                     i--;
 
                 }
@@ -165,6 +179,8 @@ public class SyntaxAnalysis {
                 if (strarr[i].equals("<")) {
                     String f2 = strarr[i];
                     strarr[i] = f2 + "\tLT --Relop Identified!";
+                                            System.out.println(strarr[i]);
+
                     i--;
                 } else {
 
@@ -177,6 +193,7 @@ public class SyntaxAnalysis {
                 String arop = strarr[i];
 
                 System.out.println(arop + "\t --ADD Arop Identified!");
+                
                 continue;
 
             }
