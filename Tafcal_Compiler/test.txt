@@ -1,14 +1,18 @@
 // This is my Orignal Txt File
 begin;
-int var1=0;
-if(var1<>0) then
-var1=5+2;
-else{var1=5-2};
-string str;
-float i=0;
-if(i<=1)then{i++
+int var1= 0;
+if( var2 <> 1 ) then
+var3 = 2 + 3;
+else{
+var4 = 4 - 5 + 6;
+};
+string name = "Syed_Mustafa_Imam" ;
+string regNo = "1812134" ;
+
+float i= 7;
+if(i <= 8 )then{
 char arry = str;
-if( arry > var1 ){
+if( arry > var5 ){
 end;
 }
 }

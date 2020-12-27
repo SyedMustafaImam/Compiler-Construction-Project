@@ -16,7 +16,7 @@ public class Tafcal_Compiler {
 
         SyntaxAnalysis filefun = new SyntaxAnalysis();
         
-        filefun.printngFile();
+        filefun.printSymbolTable();
     
         
         
