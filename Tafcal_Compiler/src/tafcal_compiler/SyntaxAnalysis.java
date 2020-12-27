@@ -7,7 +7,6 @@ package tafcal_compiler;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,8 +38,8 @@ public class SyntaxAnalysis {
 //        for (int i = 1; i < identifiedTokens.size(); i++) {
 //            System.out.println(identifiedTokens.get(i));
 //        }
-        identifyReloc(stringToArray(inputCode));
-        getKeywordsandIdentifer();
+        identifyRelocAndKeywords(stringToArray(inputCode));
+        analysingIdentifiers(stringToArray(inputCode));
 
     }
 
@@ -112,7 +111,7 @@ public class SyntaxAnalysis {
 
     }
 
-    static String[] stringToArray(final String stname) {
+    static String[] stringToArray(String stname) {
 
         final String[] strarr = new String[stname.length()];
         for (int i = 0; i < stname.length(); i++) {
@@ -124,7 +123,7 @@ public class SyntaxAnalysis {
 
     }
 
-    static void identifyReloc(final String[] strarr) {
+    static void identifyRelocAndKeywords(String[] strarr) {
         int keyid = 1;
         final int arrayLength = strarr.length;
         for (int i = 0; i < arrayLength; i++) {
@@ -275,6 +274,7 @@ public class SyntaxAnalysis {
 
                                 String key5 = "else";
                                 strarr[i] = key5 + "\t--Keyword " + keyid + " Identified";
+                                System.out.println(strarr[i]);
                                 keyid++;
 
                             }
@@ -298,6 +298,7 @@ public class SyntaxAnalysis {
 
                                     String key1 = "begin";
                                     strarr[i] = key1 + "\t--Keyword " + keyid + " Identified";
+                                    System.out.println(strarr[i]);
                                     keyid++;
 
                                 }
@@ -320,7 +321,9 @@ public class SyntaxAnalysis {
                             i = i + 2;
                             String key2 = "end";
                             strarr[i] = key2 + "\t--Keyword " + keyid + " Identified";
+                            System.out.println(strarr[i]);
                             keyid++;
+                            
                         }
                     }
                 }
@@ -332,6 +335,7 @@ public class SyntaxAnalysis {
                         i = i + 1;
                         String key3 = "i" + "f";
                         strarr[i] = key3 + "\t--Keyword " + keyid + " Identified";
+                        System.out.println(strarr[i]);
                         keyid++;
                     }
                 }
@@ -346,6 +350,7 @@ public class SyntaxAnalysis {
 
                                 String key4 = "then";
                                 strarr[i] = key4 + "\t--Keyword " + keyid + " Identified";
+                                System.out.println(strarr[i]);
                                 keyid++;
 
                             }
@@ -365,6 +370,7 @@ public class SyntaxAnalysis {
 
                             String key6 = "int";
                             strarr[i] = key6 + "\t--Keyword " + keyid + " Identified";
+                            System.out.println(strarr[i]);
                             keyid++;
                         }
                     }
@@ -399,6 +405,7 @@ public class SyntaxAnalysis {
 
                                 String key8 = "char";
                                 strarr[i] = key8 + "\t--Keyword " + keyid + " Identified";
+                            System.out.println(strarr[i]);
                                 keyid++;
                             }
                         }
@@ -417,6 +424,7 @@ public class SyntaxAnalysis {
 
                                         String key9 = "string";
                                         strarr[i] = key9 + "\t--Keyword " + keyid + " Identified";
+                                System.out.println(strarr[i]);
                                         keyid++;
 
                                     }
@@ -429,22 +437,119 @@ public class SyntaxAnalysis {
                     }
                 }
             }
+            
+            
+            
+            
+            
+            
+            
+            
+  
             // Identifying the identifiers
             
             
-
-            
-
-            System.out.println(strarr[i]);
+//            System.out.println(strarr[i]);
 
         }
     }
-    
-    
-    public void getKeywordsandIdentifer() {
+
+    public void analysingIdentifiers(String[] strarr) {
+
         int i = 0;
-        char c ;
-       String  pass=null;
+        String str = "";
+        String identifer_pattern = "^([a-zA-Z_$][a-zA-Z\\d_$]*)$";
+        Pattern p = Pattern.compile(identifer_pattern);
+        
+        while (strarr.length != i) {
+            String c = strarr[i];
+
+            boolean flag = Character.isWhitespace(c.charAt(0));
+            if (flag == true || c.equals("=") || c.contentEquals(";")) {
+                Matcher m = p.matcher(str);
+                boolean flage= m.matches();
+
+                if (flage == true) {
+
+                    switch (str) {
+                        case "if":
+//                            System.out.println("if" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "begin":
+//                            System.out.println("begin"+ "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "then":
+//                            System.out.println("then" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "int":
+//                            System.out.println("int" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "float":
+//                            System.out.println("float" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "char":
+//                            System.out.println("char" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "else":
+//                            System.out.println("else" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "string":
+//                            System.out.println("else" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        case "end":
+//                            System.out.println("else" + "\t Keyword");
+                            i++;
+                            str = "";
+                            break;
+                        default:
+                            System.out.println(str + "\t identifier");
+                            i++;
+                            str = "";
+                            break;
+                    }
+
+                } else {
+                    str = "";
+                    i++;
+                }
+                
+                
+
+            } else {
+                str = str.concat(c);
+//                System.out.println(str);
+                i++;
+
+            }
+
+        }
+
+    }
+    
+    
+    public void identifyStringLiterals(String[] starr){
+    
+        
+    }
+    
+    public void identifyUnsignedInteger(String[] starr){
+    
         
     }
 
