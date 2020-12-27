@@ -43,26 +43,75 @@ public class SyntaxAnalysis {
         identifyRelocAndKeywords(stringToArray(inputCode));
         analysingIdentifiers(stringToArray(inputCode));
         identifyUnsignedInteger(stringToArray(inputCode));
-       
-
 
         System.out.println("---------------------------------------SYMBOL TABLE-------------------------------------------");
-        System.out.println("+=============================================================================================+");
-          
+        System.out.println("+==================================+=====================+====================================+");
+
         System.out.format("|\t %-25s |\t %-15s |\t %-25s    |", "LEXEME", "TOKEN TYPE", "ATTRIBUTE VALUE");
-     System.out.println("\n+==================================+=====================+====================================+");
-        for(int i =0; i< tokenName.size() ; i++){
-        
-        
-        System.out.format("|\t %-25s |\t %-15s |\t %-25s    |\n", tokenName.get(i), tokentype.get(i), attributeValue.get(i));
-       System.out.println("|__________________________________|_____________________|____________________________________|");
+      System.out.println("\n+==================================+=====================+====================================+");
+        for (int i = 0; i < tokenName.size(); i++) {
+
+            System.out.format("|\t %-25s |\t %-15s |\t %-25s    |\n", tokenName.get(i), tokentype.get(i), attributeValue.get(i));
+            System.out.println("|__________________________________|_____________________|____________________________________|");
         }
     }
-    
-    public void printingError(){
-    
-    }
-    
+
+//    public void printingError() {
+//        String temp = "";
+//
+//        String temp2 = "";
+//
+//        String regexStr = "^([a-zA-Z_$][a-zA-Z\\d_$]*)$";
+//        Pattern pStr = Pattern.compile(regexStr);
+//
+//        String regexSl = "\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"";
+//        Pattern pSl = Pattern.compile(regexSl);
+//
+//        String regexunint = "^[1-9][0-9]*|0$";
+//        Pattern punint = Pattern.compile(regexunint);
+//        for (int maar = 0; maar < list.size(); maar++) {
+//            i = 0;
+//            temp = list.get(maar);
+//
+//            while (temp.length() != i) {
+//
+//                c = temp.charAt(i);
+//
+//                boolean h = Character.isWhitespace(c);
+//                if (h == true || c == '=' || c == ';') {
+//                    Matcher mStr = pStr.matcher(temp2);
+//                    boolean hStr = mStr.matches();
+//
+//                    Matcher mSl = pSl.matcher(temp2);
+//                    boolean hSl = mSl.matches();
+//
+//                    Matcher munint = punint.matcher(temp2);
+//                    boolean hunint = munint.matches();
+//                    if (hStr == true || hSl == true || hunint == true) {
+//
+//                        inc();
+//                        temp2 = "";
+//
+//                    } else if (str.equals("") || str.equals(" ") || str.equals("+") || str.equals("-") || str.equals("/") || str.equals("*") || str.equals("=") || str.equals("(") || str.equals(")") || str.equals("{") || str.equals("}") || str.equals(";") || str.equals("(") || str.equals(")") || str.equals("{") || str.equals("}") || str.equals("<") || str.equals(">") || str.equals("<=") || str.equals(">=") || str.equals("<>") || str.equals("==") || str.equals("/*") || str.contains("/*") || str.equals("//") || str.contains("//") || str.equals("*/") || str.contains("*/")) {
+//                        inc();
+//                        str = "";
+//                    } else {
+//                        System.out.printf("Error:" + "%5s " + "  and Line: %20s", str, maar);
+//                        System.out.println("");
+//                        str = "";
+//                        inc();
+//                    }
+//                } else {
+//                    str = str.concat(Character.toString(c));
+//                    inc();
+//                }
+//
+//            }
+//
+//        }
+//
+//    }
+
     public String readFile(String fileName) {
         System.out.println("\n********************************WELCOME TO TAFCAL COMPILER*************************************");
 
@@ -108,15 +157,15 @@ public class SyntaxAnalysis {
 
         return new String(buffer);
     }
-public void toSymbolTable(String Name, String Type, String value){
-    
-    String tokenNames = Name, tokenTypes = Type, atValue = value;
-    
-    
-    tokenName.add(tokenNames);
-    tokentype.add(tokenTypes);
-    attributeValue.add(atValue);
-    
+
+    public void toSymbolTable(String Name, String Type, String value) {
+
+        String tokenNames = Name, tokenTypes = Type, atValue = value;
+
+        tokenName.add(tokenNames);
+        tokentype.add(tokenTypes);
+        attributeValue.add(atValue);
+
     }
 
     public String removeComments(String fileName) {
@@ -164,29 +213,28 @@ public void toSymbolTable(String Name, String Type, String value){
 
                     if ((d1 + d2).equals("<=")) {
                         strarr[i] = d1 + d2 + "\tLE --Relop Identified!";
-                        toSymbolTable("<=", "RELOP" , "LE");
+                        toSymbolTable("<=", "RELOP", "LE");
 //                        System.out.println(strarr[i]);
 
                     }
 
                     if ((d1 + d2).equals(">=")) {
                         strarr[i] = d1 + d2 + "\tGE --Relop Identified!";
-                        toSymbolTable(">=", "RELOP" , "GE");
-                        
-//                        System.out.println(strarr[i]);
+                        toSymbolTable(">=", "RELOP", "GE");
 
+//                        System.out.println(strarr[i]);
                     }
 
                     if ((d1 + d2).equals("==")) {
                         strarr[i] = d1 + d2 + "\tEQ --Relop Identified!";
-                        toSymbolTable("==", "RELOP" , "EQ");
+                        toSymbolTable("==", "RELOP", "EQ");
 //                        System.out.println(strarr[i]);
 
                     }
 
                     if ((d1 + d2).equals("<>")) {
                         strarr[i] = d1 + d2 + "\tNE --Relop Identified!";
-                       toSymbolTable("<>", "RELOP" , "NE");
+                        toSymbolTable("<>", "RELOP", "NE");
 //                        System.out.println(strarr[i]);
 
                     }
@@ -200,7 +248,7 @@ public void toSymbolTable(String Name, String Type, String value){
                 if (strarr[i].equals(">")) {
                     String f1 = strarr[i];
                     strarr[i] = f1 + "\tGT --Relop Identified!";
-                    toSymbolTable(">", "RELOP" , "GT");
+                    toSymbolTable(">", "RELOP", "GT");
 //                    System.out.println(strarr[i]);
 
                     i--;
@@ -210,7 +258,7 @@ public void toSymbolTable(String Name, String Type, String value){
                 if (strarr[i].equals("<")) {
                     String f2 = strarr[i];
                     strarr[i] = f2 + "\tLT --Relop Identified!";
-                    toSymbolTable("<", "RELOP" , "LT");
+                    toSymbolTable("<", "RELOP", "LT");
 //                    System.out.println(strarr[i]);
 
                     i--;
@@ -223,7 +271,7 @@ public void toSymbolTable(String Name, String Type, String value){
             // Identifying Operators
             if (strarr[i].equals("+")) {
                 String arop = strarr[i];
-                toSymbolTable("+", "AROP" , "ADD");
+                toSymbolTable("+", "AROP", "ADD");
 //                System.out.println(arop + "\t --ADD Arop Identified!");
 
                 continue;
@@ -231,14 +279,14 @@ public void toSymbolTable(String Name, String Type, String value){
             }
             if (strarr[i].equals("-")) {
                 String arop = strarr[i];
-                toSymbolTable("-", "AROP" , "SUB");
+                toSymbolTable("-", "AROP", "SUB");
 //                System.out.println(arop + "\t --SUB Arop Identified!");
                 continue;
 
             }
 
             if (strarr[i].equals("*")) {
-                toSymbolTable("*", "AROP" , "MUL");
+                toSymbolTable("*", "AROP", "MUL");
                 String arop = strarr[i];
 
 //                System.out.println(arop + "\t --MUL Arop Identified!");
@@ -248,19 +296,17 @@ public void toSymbolTable(String Name, String Type, String value){
 
             if (strarr[i].equals("/")) {
                 String arop = strarr[i];
-                toSymbolTable("/", "AROP" , "DIV");
+                toSymbolTable("/", "AROP", "DIV");
 
 //                System.out.println(arop + "\t --DIV Arop Identified!");
                 continue;
 
             }
 
-            
-
             // Identifing Other Operators OTOP
             if (strarr[i].equals("=")) {
                 String arop = strarr[i];
-                toSymbolTable("=", "OTOP" , "ASN");
+                toSymbolTable("=", "OTOP", "ASN");
 //                System.out.println(arop + "\t --ASN Otop Identified!");
                 continue;
 
@@ -268,7 +314,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
             if (strarr[i].equals("(")) {
                 String arop = strarr[i];
-                toSymbolTable("(", "OTOP" , "LPRN");
+                toSymbolTable("(", "OTOP", "LPRN");
 //                System.out.println(arop + "\t --LPRN Otop Identified!");
                 continue;
 
@@ -276,7 +322,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
             if (strarr[i].equals(")")) {
                 String arop = strarr[i];
-                toSymbolTable(")", "OTOP" , "RPRN");
+                toSymbolTable(")", "OTOP", "RPRN");
 
 //                System.out.println(arop + "\t --RPRN Otop Identified!");
                 continue;
@@ -285,7 +331,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
             if (strarr[i].equals("{")) {
                 String arop = strarr[i];
-                toSymbolTable("{", "OTOP" , "LBRC");
+                toSymbolTable("{", "OTOP", "LBRC");
 
 //                System.out.println(arop + "\t --LBRC Otop Identified!");
                 continue;
@@ -293,9 +339,9 @@ public void toSymbolTable(String Name, String Type, String value){
             }
 
             if (strarr[i].equals("}")) {
-                
+
                 String arop = strarr[i];
-                toSymbolTable("}", "OTOP" , "RBRC");
+                toSymbolTable("}", "OTOP", "RBRC");
 
 //                System.out.println(arop + "\t --RBRC Otop Identified!");
                 continue;
@@ -304,7 +350,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
             if (strarr[i].equals(";")) {
                 String arop = strarr[i];
-                toSymbolTable(";", "OTOP" , "LNTR");
+                toSymbolTable(";", "OTOP", "LNTR");
 
 //                System.out.println(arop + "\t --LNTR Otop Identified!");
                 continue;
@@ -325,10 +371,9 @@ public void toSymbolTable(String Name, String Type, String value){
                                 keyid++;
                                 String key5 = "else";
                                 strarr[i] = key5 + "\t--Keyword " + keyid + " Identified";
-                                toSymbolTable(key5, "Keyword" , Integer.toString(keyid));
+                                toSymbolTable(key5, "Keyword", Integer.toString(keyid));
 
 //                                System.out.println(strarr[i]);
-
                             }
                         }
                     }
@@ -351,7 +396,7 @@ public void toSymbolTable(String Name, String Type, String value){
                                     keyid++;
                                     String key1 = "begin";
                                     strarr[i] = key1 + "\t--Keyword " + keyid + " Identified";
-                                    toSymbolTable(key1, "Keyword" , Integer.toString(keyid));
+                                    toSymbolTable(key1, "Keyword", Integer.toString(keyid));
 //                                    System.out.println(strarr[i]);
 
                                 }
@@ -374,7 +419,7 @@ public void toSymbolTable(String Name, String Type, String value){
                             i = i + 2;
                             keyid++;
                             String key2 = "end";
-                            toSymbolTable(key2, "Keyword" , Integer.toString(keyid));
+                            toSymbolTable(key2, "Keyword", Integer.toString(keyid));
                             strarr[i] = key2 + "\t--Keyword " + keyid + " Identified";
 //                            System.out.println(strarr[i]);
 
@@ -389,7 +434,7 @@ public void toSymbolTable(String Name, String Type, String value){
                         keyid++;
                         i = i + 1;
                         String key3 = "if";
-                        toSymbolTable(key3, "Keyword" , Integer.toString(keyid));
+                        toSymbolTable(key3, "Keyword", Integer.toString(keyid));
                         strarr[i] = key3 + "\t--Keyword " + keyid + " Identified";
 //                        System.out.println(strarr[i]);
                     }
@@ -405,7 +450,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
                                 keyid++;
                                 String key4 = "then";
-                                toSymbolTable(key4, "Keyword" , Integer.toString(keyid));
+                                toSymbolTable(key4, "Keyword", Integer.toString(keyid));
                                 strarr[i] = key4 + "\t--Keyword " + keyid + " Identified";
 //                                System.out.println(strarr[i]);
 
@@ -426,7 +471,7 @@ public void toSymbolTable(String Name, String Type, String value){
                             keyid++;
 
                             String key6 = "int";
-                          toSymbolTable(key6, "Keyword" , Integer.toString(keyid));
+                            toSymbolTable(key6, "Keyword", Integer.toString(keyid));
                             strarr[i] = key6 + "\t--Keyword " + keyid + " Identified";
 //                            System.out.println(strarr[i]);
                         }
@@ -445,7 +490,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
                                     keyid++;
                                     String key7 = "float";
-                                    toSymbolTable(key7, "Keyword" , Integer.toString(keyid));
+                                    toSymbolTable(key7, "Keyword", Integer.toString(keyid));
                                     strarr[i] = key7 + "\t--Keyword " + keyid + " Identified";
                                 }
                             }
@@ -465,7 +510,7 @@ public void toSymbolTable(String Name, String Type, String value){
                                 String key8 = "char";
                                 strarr[i] = key8 + "\t--Keyword " + keyid + " Identified";
 //                                System.out.println(strarr[i]);
-                                toSymbolTable(key8, "Keyword" , Integer.toString(keyid));
+                                toSymbolTable(key8, "Keyword", Integer.toString(keyid));
                             }
                         }
                     }
@@ -485,7 +530,7 @@ public void toSymbolTable(String Name, String Type, String value){
                                         String key9 = "string";
                                         strarr[i] = key9 + "\t--Keyword " + keyid + " Identified";
 //                                        System.out.println(strarr[i]);
-                                        toSymbolTable(key9, "Keyword" , Integer.toString(keyid));
+                                        toSymbolTable(key9, "Keyword", Integer.toString(keyid));
 
                                     }
 
@@ -520,7 +565,7 @@ public void toSymbolTable(String Name, String Type, String value){
                     switch (lexeme) {
                         case "if":
 //                            System.out.println("if" + "\t Keyword");
-                            
+
                             i++;
                             lexeme = "";
                             break;
@@ -567,7 +612,7 @@ public void toSymbolTable(String Name, String Type, String value){
                         default:
 //                            System.out.println(lexeme + "\t identifier");
                             keyid++;
-                            toSymbolTable(lexeme, "ID" , Integer.toString(keyid));
+                            toSymbolTable(lexeme, "ID", Integer.toString(keyid));
                             i++;
                             lexeme = "";
                             break;
@@ -602,7 +647,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
                 if (m.matches() == true) {
 //                    System.out.println(lexeme.replace("\"", "") + "\t String  --sliteral");
-                    toSymbolTable(lexeme, "sLiteral" , lexeme.replace("\"", ""));
+                    toSymbolTable(lexeme, "sLiteral", lexeme.replace("\"", ""));
 
                     lexeme = "";
                     i++;
@@ -635,7 +680,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
                 if (m.matches() == true) {
 //                    System.out.println(lexeme + "\t Integer --unit");
-                    toSymbolTable(lexeme, "uInt" , lexeme);
+                    toSymbolTable(lexeme, "uInt", lexeme);
 
                     i++;
                     lexeme = "";
@@ -654,8 +699,7 @@ public void toSymbolTable(String Name, String Type, String value){
 
         }
     }
-    
-    
+
     public void lineByLine() {
 
         BufferedReader reader;
