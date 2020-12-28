@@ -7,10 +7,13 @@ package tafcal_compiler;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,24 +24,21 @@ import java.util.regex.Pattern;
 public class SyntaxAnalysis {
 
     File file = new File("test.txt");
-    ArrayList<String> eachLineInArray = new ArrayList<>();
     ArrayList<String> identifiedTokens = new ArrayList<>();
+    ArrayList<String> eachLineInArray = new ArrayList<>();
+    ArrayList<String> eachWordInArray = new ArrayList<>();
 
     ArrayList<String> tokenName = new ArrayList<>();
     ArrayList<String> tokentype = new ArrayList<>();
     ArrayList<String> attributeValue = new ArrayList<>();
+    ArrayList<String> lineNumber = new ArrayList<>();
 
     String fileName = "test.txt";
     String inputCode = removeComments(fileName);
     int keyid = 0;
+    int lineNo = 1;
 
     public void printSymbolTable() {
-
-//
-//    identifiedTokens = stringToArrayList(inputCode);  
-//        for (int i = 1; i < identifiedTokens.size(); i++) {
-//            System.out.println(identifiedTokens.get(i));
-//        }
         identifyStringLiterals(stringToArray(inputCode));
         identifyRelocAndKeywords(stringToArray(inputCode));
         analysingIdentifiers(stringToArray(inputCode));
@@ -48,69 +48,137 @@ public class SyntaxAnalysis {
         System.out.println("+==================================+=====================+====================================+");
 
         System.out.format("|\t %-25s |\t %-15s |\t %-25s    |", "LEXEME", "TOKEN TYPE", "ATTRIBUTE VALUE");
-      System.out.println("\n+==================================+=====================+====================================+");
+        System.out.println("\n+==================================+=====================+====================================+");
         for (int i = 0; i < tokenName.size(); i++) {
 
             System.out.format("|\t %-25s |\t %-15s |\t %-25s    |\n", tokenName.get(i), tokentype.get(i), attributeValue.get(i));
             System.out.println("|__________________________________|_____________________|____________________________________|");
         }
+
+        System.out.println("\n\n---------------------------------------ERRORS-------------------------------------------\n");
+        lineByLine();
+        printigError2();
+//        printingError();
+
     }
 
-//    public void printingError() {
-//        String temp = "";
-//
-//        String temp2 = "";
-//
-//        String regexStr = "^([a-zA-Z_$][a-zA-Z\\d_$]*)$";
-//        Pattern pStr = Pattern.compile(regexStr);
-//
-//        String regexSl = "\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"";
-//        Pattern pSl = Pattern.compile(regexSl);
-//
-//        String regexunint = "^[1-9][0-9]*|0$";
-//        Pattern punint = Pattern.compile(regexunint);
-//        for (int maar = 0; maar < list.size(); maar++) {
-//            i = 0;
-//            temp = list.get(maar);
-//
-//            while (temp.length() != i) {
-//
-//                c = temp.charAt(i);
-//
-//                boolean h = Character.isWhitespace(c);
-//                if (h == true || c == '=' || c == ';') {
-//                    Matcher mStr = pStr.matcher(temp2);
-//                    boolean hStr = mStr.matches();
-//
-//                    Matcher mSl = pSl.matcher(temp2);
-//                    boolean hSl = mSl.matches();
-//
-//                    Matcher munint = punint.matcher(temp2);
-//                    boolean hunint = munint.matches();
-//                    if (hStr == true || hSl == true || hunint == true) {
-//
-//                        inc();
-//                        temp2 = "";
-//
-//                    } else if (str.equals("") || str.equals(" ") || str.equals("+") || str.equals("-") || str.equals("/") || str.equals("*") || str.equals("=") || str.equals("(") || str.equals(")") || str.equals("{") || str.equals("}") || str.equals(";") || str.equals("(") || str.equals(")") || str.equals("{") || str.equals("}") || str.equals("<") || str.equals(">") || str.equals("<=") || str.equals(">=") || str.equals("<>") || str.equals("==") || str.equals("/*") || str.contains("/*") || str.equals("//") || str.contains("//") || str.equals("*/") || str.contains("*/")) {
-//                        inc();
-//                        str = "";
-//                    } else {
-//                        System.out.printf("Error:" + "%5s " + "  and Line: %20s", str, maar);
-//                        System.out.println("");
-//                        str = "";
-//                        inc();
-//                    }
-//                } else {
-//                    str = str.concat(Character.toString(c));
-//                    inc();
-//                }
-//
-//            }
-//
-//        }
-//
-//    }
+    public void printingError() {
+        String temp = "";
+
+        String temp2 = "";
+
+        String regexStr = "^([a-zA-Z_$][a-zA-Z\\d_$]*)$";
+        Pattern pStr = Pattern.compile(regexStr);
+
+        String regexSl = "\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"";
+        Pattern pSl = Pattern.compile(regexSl);
+
+        String regexunint = "^[1-9][0-9]*|0$";
+        Pattern punint = Pattern.compile(regexunint);
+        for (int maar = 0; maar < tokenName.size(); maar++) {
+            int i = 0;
+            temp = tokenName.get(maar);
+
+            while (temp.length() != i) {
+
+                char c = temp.charAt(i);
+
+                boolean h = Character.isWhitespace(c);
+                if (h == true || c == '=' || c == ';') {
+                    Matcher mStr = pStr.matcher(temp2);
+                    boolean hStr = mStr.matches();
+
+                    Matcher mSl = pSl.matcher(temp2);
+                    boolean hSl = mSl.matches();
+
+                    Matcher munint = punint.matcher(temp2);
+                    boolean hunint = munint.matches();
+                    if (hStr == true || hSl == true || hunint == true) {
+
+                        i++;
+                        temp2 = "";
+
+                    } else if (temp2.equals("") || temp2.equals(" ") || temp2.equals("+") || temp2.equals("-") || temp2.equals("/") || temp2.equals("*") || temp2.equals("=") || temp2.equals("(") || temp2.equals(")") || temp2.equals("{") || temp2.equals("}") || temp2.equals(";") || temp2.equals("(") || temp2.equals(")") || temp2.equals("{") || temp2.equals("}") || temp2.equals("<") || temp2.equals(">") || temp2.equals("<=") || temp2.equals(">=") || temp2.equals("<>") || temp2.equals("==") || temp2.equals("/*") || temp2.contains("/*") || temp2.equals("//") || temp2.contains("//") || temp2.equals("*/") || temp2.contains("*/")) {
+                        i++;
+                        temp2 = "";
+                    } else {
+                        System.out.printf("Error:" + "%5s " + "  and Line: %20s", temp2, maar);
+                        System.out.println("");
+                        temp2 = "";
+                        i++;
+                    }
+                } else {
+                    temp2 = temp2.concat(Character.toString(c));
+                    i++;
+                }
+
+            }
+
+        }
+
+    }
+
+    public void printigError2() {
+
+        String stringWithoutWhiteSpaces = inputCode.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|' '| |\\s|", "");
+        String[] starr = stringToArray(inputCode);
+        String[] withoutSpaces = stringToArray(stringWithoutWhiteSpaces);
+        Pattern string_pattern = Pattern.compile("^\"[0-9a-z A-Z_]*\"$");
+        String lexeme = "";
+        int i = 0;
+        int count = 0;
+
+        if (starr[i].equals("\n") || starr[i].equals("\r")) {
+            lineNo++;
+
+        }
+
+        while (starr.length != i) {
+            String temp = starr[i];
+
+            if (temp.equals("=") || Character.isWhitespace(temp.charAt(0)) == true || temp.contentEquals(";") || temp.contentEquals(")") || temp.contentEquals("}") || temp.contentEquals("{") || temp.contentEquals("(") || temp.contentEquals("<") || temp.contentEquals(">")) {
+                Matcher m = string_pattern.matcher(lexeme);
+
+                if (tokenName.contains(lexeme)) {
+//                    System.out.println(lexeme.replace("\"", "") + "\t String  --sliteral");
+
+                    lexeme = "";
+
+                    i++;
+
+                } else {
+
+                    if (lexeme == null || lexeme.equals("")) {
+
+                    } else {
+                        int j = 1;
+
+                        String tem = lexeme.concat("();");
+                        if (eachLineInArray.contains(lexeme) || eachLineInArray.contains(lexeme.concat(temp))) {
+
+                            while (!lexeme.equals(eachLineInArray.get(j))) {
+
+                                j++;
+
+                            }
+
+                        }
+                            System.out.println("Line No. " + j + "\tError: " + lexeme);
+                    }
+                    lexeme = "";
+
+                    i++;
+                }
+
+            } else {
+                lexeme = lexeme.concat(temp);
+
+                i++;
+            }
+
+        }
+
+    }
 
     public String readFile(String fileName) {
         System.out.println("\n********************************WELCOME TO TAFCAL COMPILER*************************************");
@@ -136,6 +204,7 @@ public class SyntaxAnalysis {
             System.out.print("Got into an error!");
             e.printStackTrace();
         }
+                    int line =0;
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -148,7 +217,12 @@ public class SyntaxAnalysis {
             while (c != -1) {
                 buffer[i++] = (char) c;
                 c = bufferedReader.read();
+                
+                if(c==10){
+                    line++;
+                    
 
+            }
             }
 
         } catch (final IOException e) {
@@ -706,6 +780,9 @@ public class SyntaxAnalysis {
         try {
             reader = new BufferedReader(new FileReader("test.txt"));
             String line = reader.readLine();
+            eachLineInArray.add(null);
+            eachLineInArray.add(line);
+
             while (line != null) {
 
                 // read next line
@@ -717,6 +794,22 @@ public class SyntaxAnalysis {
             e.printStackTrace();
         }
 
+//      for(int i = 1; i<eachLineInArray.size(); i++){
+//      
+//          System.out.println(i + ". " + eachLineInArray.get(i) );
+//      }
+//        System.out.println("\n\n-------------------------------------\n\n");
+//            int j =0;
+//       
+//        if (eachLineInArray.contains("printf();")) {
+//
+//                            while (!"printf();".equals(eachLineInArray.get(j))) {
+//
+//                                j++;
+//
+//                            }
+//                        System.out.println("Line No. " + j + "\tError: " + "printf()");
+//
+//                        }
     }
-
 }
