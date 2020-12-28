@@ -12,21 +12,21 @@ sdaf
 
 begin;
 int var1= 0;
-if( var2 <> 1 ) then
+if ( var2 <> 1 ) then 
 var3 = 2 + 3;
-else{
-var4 = 4 - 5 + 6;
-};
-1812135musta
-string name = "Syed_Mustafa_Imam" ;
-string regNo = "1812134" ;
-i++
-float i= 7;
-if (i <= 8 ) then {
-char arry = str;
-123asdfas
-
-if( arry > var5 ){
+else { 
+var4 = 4 - 5 + 6; 
+}; 
+1812135musta 
+string name = "Syed_Mustafa_Imam" ; 
+string regNo = "1812134" ; 
+i++ 
+float i= 7; 
+if ( i <= 8 ) then { 
+char arry = str; 
+123asdfas 
+ 
+if ( arry > var5 ) { 
 end;
 }
 }

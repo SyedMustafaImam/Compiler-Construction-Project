@@ -57,15 +57,16 @@ public class SyntaxAnalysis {
 
         System.out.println("\n\n---------------------------------------ERRORS-------------------------------------------\n");
         lineByLine();
-        printigError2();
-//        printingError();
+        printingError();
+//        printigError2();
 
     }
 
     public void printingError() {
-        String temp = "";
 
-        String temp2 = "";
+        String pass2 = "";
+
+        String str = "";
 
         String regexStr = "^([a-zA-Z_$][a-zA-Z\\d_$]*)$";
         Pattern pStr = Pattern.compile(regexStr);
@@ -75,46 +76,49 @@ public class SyntaxAnalysis {
 
         String regexunint = "^[1-9][0-9]*|0$";
         Pattern punint = Pattern.compile(regexunint);
-        for (int maar = 0; maar < tokenName.size(); maar++) {
+        for (int maar = 0; maar < eachLineInArray.size(); maar++) {
             int i = 0;
-            temp = tokenName.get(maar);
+            pass2 = eachLineInArray.get(maar);
 
-            while (temp.length() != i) {
+            while (pass2.length() != i) {
 
-                char c = temp.charAt(i);
+               char c = pass2.charAt(i);
 
                 boolean h = Character.isWhitespace(c);
                 if (h == true || c == '=' || c == ';') {
-                    Matcher mStr = pStr.matcher(temp2);
+                    Matcher mStr = pStr.matcher(str);
                     boolean hStr = mStr.matches();
 
-                    Matcher mSl = pSl.matcher(temp2);
+                    Matcher mSl = pSl.matcher(str);
                     boolean hSl = mSl.matches();
 
-                    Matcher munint = punint.matcher(temp2);
+                    Matcher munint = punint.matcher(str);
                     boolean hunint = munint.matches();
                     if (hStr == true || hSl == true || hunint == true) {
 
                         i++;
-                        temp2 = "";
+                        str = "";
 
-                    } else if (temp2.equals("") || temp2.equals(" ") || temp2.equals("+") || temp2.equals("-") || temp2.equals("/") || temp2.equals("*") || temp2.equals("=") || temp2.equals("(") || temp2.equals(")") || temp2.equals("{") || temp2.equals("}") || temp2.equals(";") || temp2.equals("(") || temp2.equals(")") || temp2.equals("{") || temp2.equals("}") || temp2.equals("<") || temp2.equals(">") || temp2.equals("<=") || temp2.equals(">=") || temp2.equals("<>") || temp2.equals("==") || temp2.equals("/*") || temp2.contains("/*") || temp2.equals("//") || temp2.contains("//") || temp2.equals("*/") || temp2.contains("*/")) {
+                    } else if (str.equals("") || str.equals(" ") || str.equals("+") || str.equals("-") || str.equals("/") || str.equals("*") || str.equals("=") || str.equals("(") || str.equals(")") || str.equals("{") || str.equals("}") || str.equals(";") || str.equals("(") || str.equals(")") || str.equals("{") || str.equals("}") || str.equals("<") || str.equals(">") || str.equals("<=") || str.equals(">=") || str.equals("<>") || str.equals("==") || str.equals("/*") || str.contains("/*") || str.equals("//") || str.contains("//") || str.equals("*/") || str.contains("*/")) {
                         i++;
-                        temp2 = "";
+                        str = "";
                     } else {
-                        System.out.printf("Error:" + "%5s " + "  and Line: %20s", temp2, maar);
+                        System.out.printf("Error:" + "%5s " + "  and Line: %20s", str, maar);
                         System.out.println("");
-                        temp2 = "";
+                        str = "";
                         i++;
                     }
-                } else {
-                    temp2 = temp2.concat(Character.toString(c));
-                    i++;
                 }
+      
+       else{
+         str=str.concat(Character.toString(c));
+         i++;
+         } 
+  
+ }
 
-            }
 
-        }
+}
 
     }
 
@@ -163,7 +167,7 @@ public class SyntaxAnalysis {
                             }
 
                         }
-                            System.out.println("Line No. " + j + "\tError: " + lexeme);
+                        System.out.println("Line No. " + j + "\tError: " + lexeme);
                     }
                     lexeme = "";
 
@@ -204,7 +208,7 @@ public class SyntaxAnalysis {
             System.out.print("Got into an error!");
             e.printStackTrace();
         }
-                    int line =0;
+        int line = 0;
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -217,12 +221,11 @@ public class SyntaxAnalysis {
             while (c != -1) {
                 buffer[i++] = (char) c;
                 c = bufferedReader.read();
-                
-                if(c==10){
-                    line++;
-                    
 
-            }
+                if (c == 10) {
+                    line++;
+
+                }
             }
 
         } catch (final IOException e) {
@@ -780,14 +783,15 @@ public class SyntaxAnalysis {
         try {
             reader = new BufferedReader(new FileReader("test.txt"));
             String line = reader.readLine();
-            eachLineInArray.add(null);
-            eachLineInArray.add(line);
 
             while (line != null) {
 
                 // read next line
                 line = reader.readLine();
+                if(line != null){
+                
                 eachLineInArray.add(line);
+                }
             }
             reader.close();
         } catch (IOException e) {
