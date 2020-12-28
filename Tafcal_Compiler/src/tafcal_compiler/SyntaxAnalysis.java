@@ -159,7 +159,7 @@ public class SyntaxAnalysis {
     }
 
     static String[] stringToArray(String stname) {
-         String[] strarr = new String[stname.length()];
+        String[] strarr = new String[stname.length()];
         for (int i = 0; i < stname.length(); i++) {
             strarr[i] = Character.toString(stname.charAt(i));
         }
@@ -337,7 +337,7 @@ public class SyntaxAnalysis {
                     }
                 }
             }
-            
+
             if (strarr[i].equals("i")) {
                 if (strarr[i + 1].equals("f")) {
                     if (Character.isWhitespace(strarr[i + 2].charAt(0)) || strarr[i + 2].equals("(")) {
@@ -371,7 +371,6 @@ public class SyntaxAnalysis {
 
             }
 
-            
             if (strarr[i].equals("i")) {
                 if (strarr[i + 1].equals("n")) {
                     if (strarr[i + 2].equals("t")) {
