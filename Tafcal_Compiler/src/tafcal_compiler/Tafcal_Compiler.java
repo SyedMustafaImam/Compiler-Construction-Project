@@ -17,8 +17,9 @@ public class Tafcal_Compiler {
         SyntaxAnalysis filefun = new SyntaxAnalysis();
         
         filefun.printSymbolTable();
-    
-        
+        filefun.getSLRTable();
+        filefun.getCFGRules();
+        filefun.slrParsing();
         
     
     }
@@ -28,6 +29,8 @@ public class Tafcal_Compiler {
 
 
     }
+
+
 
     
    
