@@ -1,4 +1,15 @@
+/*
+
+sadf
+asdf
+asdf
+sdaf
+sdf
+sdaf
+
+*/
 // This is my Orignal Txt File
+
 begin;
 int var1= 0;
 if( var2 <> 1 ) then
@@ -6,12 +17,17 @@ var3 = 2 + 3;
 else{
 var4 = 4 - 5 + 6;
 };
+1812135musta
+begin;
+@#3434
+
 string name = "Syed_Mustafa_Imam" ;
 string regNo = "1812134" ;
-
+//i++
 float i= 7;
-if(i <= 8 )then{
+if (i <= 8 ) then {
 char arry = str;
+//123asdfas
 if( arry > var5 ){
 end;
 }
@@ -30,5 +46,4 @@ char
 string 
 */
 // this is made by mustafa
-
 
