@@ -32,11 +32,16 @@ public class SyntaxAnalysis {
     public void printSymbolTable() {
 
         lineByLine();
-
+        System.out.println("---------------------------------------Identifying Lexemes-------------------------------------");
+        System.out.println("+==================================+=====================+====================================+\n\n");
+        System.out.format("(%3s  , %-2s, %-2s)\n\n", "Token_Name", "Token_Type", "Attribute_Value");
+                   System.out.println("+===========================================================================================+");
         identifyStringLiterals(stringToArray(inputCode));
         identifyRelocAndKeywords(stringToArray(inputCode));
         analysingIdentifiers(stringToArray(inputCode));
         identifyUnsignedInteger(stringToArray(inputCode));
+        System.out.println("----------------------------------------------END----------------------------------------------\n\n");
+
         errorAnalysis();
         if (errorFlag == false) {
             System.out.println("---------------------------------------SYMBOL TABLE-------------------------------------------");
@@ -50,7 +55,7 @@ public class SyntaxAnalysis {
         } else {
             System.out.println("\n\n---------------------------------------ERRORS--------------------------------------------------\n");
             printError();
-                System.out.println("-----------------------------------------------------------------------------------------------"
+            System.out.println("-----------------------------------------------------------------------------------------------"
                     + "\n\nProgram terminated due to ERRORS...\nTo Run Program remove or Comment ERRORS\nResolve Error First...\n\n");
         }
     }
@@ -185,27 +190,27 @@ public class SyntaxAnalysis {
                         strarr[i] = d1 + d2 + "\tLE --Relop Identified!";
                         toSymbolTable("<=", "RELOP", "LE");
                         tokenForError.add("<=");
-                        System.out.println(strarr[i]);
+                        System.out.format("(%3s  , %-2s, %-2s)\n\n", "Token_Name", "<=", "RELOP", "LE");
 
                     }
                     if ((d1 + d2).equals(">=")) {
                         strarr[i] = d1 + d2 + "\tGE --Relop Identified!";
                         toSymbolTable(">=", "RELOP", "GE");
-                        System.out.println(strarr[i]);
+                        System.out.format("(%3s  , %-2s, %-2s)\n\n", ">=", "RELOP", "GE");
                         tokenForError.add(">=");
 
                     }
                     if ((d1 + d2).equals("==")) {
                         strarr[i] = d1 + d2 + "\tEQ --Relop Identified!";
                         toSymbolTable("==", "RELOP", "EQ");
-                        System.out.println(strarr[i]);
+                        System.out.format("(%3s  , %-2s, %-2s)\n\n", "==", "RELOP", "EQ");
                         tokenForError.add("==");
 
                     }
                     if ((d1 + d2).equals("<>")) {
                         strarr[i] = d1 + d2 + "\tNE --Relop Identified!";
                         toSymbolTable("<>", "RELOP", "NE");
-                        System.out.println(strarr[i]);
+                        System.out.format("(%3s  , %-2s, %-2s)\n\n", "<>", "RELOP", "NE"); 
                         tokenForError.add("<>");
 
                     }
@@ -219,7 +224,7 @@ public class SyntaxAnalysis {
                     String f1 = strarr[i];
                     strarr[i] = f1 + "\tGT --Relop Identified!";
                     toSymbolTable(">", "RELOP", "GT");
-                    System.out.println(strarr[i]);
+                    System.out.format("(%3s  , %-2s, %-2s)\n\n", ">", "RELOP", "GT");
                     tokenForError.add(">");
                     i--;
                 }
@@ -227,7 +232,7 @@ public class SyntaxAnalysis {
                     String f2 = strarr[i];
                     strarr[i] = f2 + "\tLT --Relop Identified!";
                     toSymbolTable("<", "RELOP", "LT");
-                    System.out.println(strarr[i]);
+                    System.out.format("(%3s  , %-2s, %-2s)\n\n", "<", "RELOP", "LT");
                     tokenForError.add("<");
                     i--;
 
@@ -239,28 +244,28 @@ public class SyntaxAnalysis {
             if (strarr[i].equals("+")) {
                 String arop = strarr[i];
                 toSymbolTable("+", "AROP", "ADD");
-                System.out.println(arop + "\t --ADD Arop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "+", "AROP", "ADD");
                 tokenForError.add("+");
                 continue;
             }
             if (strarr[i].equals("-")) {
                 String arop = strarr[i];
                 toSymbolTable("-", "AROP", "SUB");
-                System.out.println(arop + "\t --SUB Arop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "-", "AROP", "SUB");
                 tokenForError.add("-");
                 continue;
             }
             if (strarr[i].equals("*")) {
                 toSymbolTable("*", "AROP", "MUL");
                 String arop = strarr[i];
-                System.out.println(arop + "\t --MUL Arop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "*", "AROP", "MUL");
                 tokenForError.add("*");
                 continue;
             }
             if (strarr[i].equals("/")) {
                 String arop = strarr[i];
                 toSymbolTable("/", "AROP", "DIV");
-                System.out.println(arop + "\t --DIV Arop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "/", "AROP", "DIV");
                 tokenForError.add("/");
                 continue;
             }
@@ -268,14 +273,14 @@ public class SyntaxAnalysis {
             if (strarr[i].equals("=")) {
                 String arop = strarr[i];
                 toSymbolTable("=", "OTOP", "ASN");
-                System.out.println(arop + "\t --ASN Otop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "=", "OTOP", "ASN");
                 tokenForError.add("=");
                 continue;
             }
             if (strarr[i].equals("(")) {
                 String arop = strarr[i];
                 toSymbolTable("(", "OTOP", "LPRN");
-                System.out.println(arop + "\t --LPRN Otop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "(", "OTOP", "LPRN");
                 tokenForError.add("(");
                 continue;
             }
@@ -283,7 +288,7 @@ public class SyntaxAnalysis {
             if (strarr[i].equals(")")) {
                 String arop = strarr[i];
                 toSymbolTable(")", "OTOP", "RPRN");
-                System.out.println(arop + "\t --RPRN Otop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", ")", "OTOP", "RPRN");
                 tokenForError.add(")");
                 continue;
             }
@@ -292,7 +297,7 @@ public class SyntaxAnalysis {
                 String arop = strarr[i];
                 toSymbolTable("{", "OTOP", "LBRC");
                 tokenForError.add("{");
-                System.out.println(arop + "\t --LBRC Otop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "{", "OTOP", "LBRC");
                 continue;
 
             }
@@ -301,7 +306,7 @@ public class SyntaxAnalysis {
                 String arop = strarr[i];
                 toSymbolTable("}", "OTOP", "RBRC");
                 tokenForError.add("}");
-                System.out.println(arop + "\t --RBRC Otop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", "}", "OTOP", "RBRC");
                 continue;
             }
 
@@ -309,7 +314,7 @@ public class SyntaxAnalysis {
                 String arop = strarr[i];
                 toSymbolTable(";", "OTOP", "LNTR");
                 tokenForError.add(";");
-                System.out.println(arop + "\t --LNTR Otop Identified!");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n", ";", "OTOP", "LNTR");
                 continue;
             }
             // Identifying the Keywords
@@ -324,7 +329,7 @@ public class SyntaxAnalysis {
                                 String key5 = "else";
                                 strarr[i] = key5 + "\t--Keyword " + keyid + " Identified";
 //                                toSymbolTable(key5, "Keyword", Integer.toString(keyid));
-                                System.out.println(strarr[i]);
+                                System.out.format("(%3s  , %-2s, %-2s)\n\n", key5, "Keyword", Integer.toString(keyid));
                                 tokenForError.add(key5);
                             }
                         }
@@ -343,7 +348,7 @@ public class SyntaxAnalysis {
                                     String key1 = "begin";
                                     strarr[i] = key1 + "\t--Keyword " + keyid + " Identified";
 //                                    toSymbolTable(key1, "Keyword", Integer.toString(keyid));
-                                    System.out.println(strarr[i]);
+                                    System.out.format("(%3s  , %-2s, %-2s)\n\n", key1, "Keyword", Integer.toString(keyid));
                                     tokenForError.add(key1);
                                 }
                             }
@@ -361,7 +366,7 @@ public class SyntaxAnalysis {
                             String key2 = "end";
 //                            toSymbolTable(key2, "Keyword", Integer.toString(keyid));
                             strarr[i] = key2 + "\t--Keyword " + keyid + " Identified";
-                            System.out.println(strarr[i]);
+                            System.out.format("(%3s  , %-2s, %-2s)\n\n", key2, "Keyword", Integer.toString(keyid));
                             tokenForError.add(key2);
                         }
                     }
@@ -376,7 +381,7 @@ public class SyntaxAnalysis {
                         String key3 = "if";
 //                        toSymbolTable(key3, "Keyword", Integer.toString(keyid));
                         strarr[i] = key3 + "\t--Keyword " + keyid + " Identified";
-                        System.out.println(strarr[i]);
+                        System.out.format("(%3s  , %-2s, %-2s)\n\n", key3, "Keyword", Integer.toString(keyid));
                         tokenForError.add(key3);
                     }
                 }
@@ -392,7 +397,7 @@ public class SyntaxAnalysis {
                                 String key4 = "then";
 //                                toSymbolTable(key4, "Keyword", Integer.toString(keyid));
                                 strarr[i] = key4 + "\t--Keyword " + keyid + " Identified";
-                                System.out.println(strarr[i]);
+                                System.out.format("(%3s  , %-2s, %-2s)\n\n", key4, "Keyword", Integer.toString(keyid));
                                 tokenForError.add(key4);
                             }
                         }
@@ -412,7 +417,7 @@ public class SyntaxAnalysis {
                             String key6 = "int";
 //                            toSymbolTable(key6, "Keyword", Integer.toString(keyid));
                             strarr[i] = key6 + "\t--Keyword " + keyid + " Identified";
-                            System.out.println(strarr[i]);
+                            System.out.format("(%3s  , %-2s, %-2s)\n\n", key6, "Keyword", Integer.toString(keyid));
                             tokenForError.add(key6);
                         }
                     }
@@ -432,6 +437,8 @@ public class SyntaxAnalysis {
                                     tokenForError.add(key7);
 //                                    toSymbolTable(key7, "Keyword", Integer.toString(keyid));
                                     strarr[i] = key7 + "\t--Keyword " + keyid + " Identified";
+                                    System.out.format("(%3s  , %-2s, %-2s)\n\n", key7, "Keyword", Integer.toString(keyid));
+
                                 }
                             }
                         }
@@ -448,7 +455,7 @@ public class SyntaxAnalysis {
                                 keyid++;
                                 String key8 = "char";
                                 strarr[i] = key8 + "\t--Keyword " + keyid + " Identified";
-                                System.out.println(strarr[i]);
+                System.out.format("(%3s  , %-2s, %-2s)\n\n",key8, "Keyword", Integer.toString(keyid));
 //                                toSymbolTable(key8, "Keyword", Integer.toString(keyid));
                                 tokenForError.add(key8);
                             }
@@ -468,7 +475,7 @@ public class SyntaxAnalysis {
                                         keyid++;
                                         String key9 = "string";
                                         strarr[i] = key9 + "\t--Keyword " + keyid + " Identified";
-                                        System.out.println(strarr[i]);
+                System.out.format("(%3s  , %-2s, %-2s)\n\n",key9, "Keyword", Integer.toString(keyid));
 //                                        toSymbolTable(key9, "Keyword", Integer.toString(keyid));
                                         tokenForError.add(key9);
                                     }
@@ -537,9 +544,9 @@ public class SyntaxAnalysis {
                             lexeme = "";
                             break;
                         default:
-                            System.out.println(lexeme + "\t identifier");
-                            tokenForError.add(lexeme);
                             keyid++;
+                            tokenForError.add(lexeme);
+                System.out.format("(%3s  , %-2s, %-2s)\n\n",lexeme, "ID", Integer.toString(attributeValue.size()));
                             toSymbolTable(lexeme, "ID", Integer.toString(attributeValue.size()));
                             i++;
                             lexeme = "";
@@ -566,7 +573,7 @@ public class SyntaxAnalysis {
             if (temp.equals("=") || Character.isWhitespace(temp.charAt(0)) == true || temp.contentEquals(";")) {
                 Matcher m = string_pattern.matcher(lexeme);
                 if (m.matches() == true) {
-                    System.out.println(lexeme.replace("\"", "") + "\t String  --sliteral");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n",lexeme, "sLiteral", Integer.toString(attributeValue.size()));
                     toSymbolTable(lexeme, "sLiteral", Integer.toString(attributeValue.size()));
                     tokenForError.add(lexeme);
                     lexeme = "";
@@ -592,7 +599,7 @@ public class SyntaxAnalysis {
             if (temp.equals("=") || Character.isWhitespace(temp.charAt(0)) == true || temp.contentEquals(";")) {
                 Matcher m = p.matcher(lexeme);
                 if (m.matches() == true) {
-                    System.out.println(lexeme + "\t Integer --unit");
+                System.out.format("(%3s  , %-2s, %-2s)\n\n",lexeme, "uInt", Integer.toString(attributeValue.size()));
                     toSymbolTable(lexeme, "uInt", Integer.toString(attributeValue.size()));
                     tokenForError.add(lexeme);
                     i++;
@@ -629,9 +636,8 @@ public class SyntaxAnalysis {
         for (int i = 1; i < eachLineInArray.size(); i++) {
             System.out.println(i + ". " + eachLineInArray.get(i));
         }
-        
-                System.out.println("----------------------------------END CODE--------------------------------------\n\n");
 
-        
+        System.out.println("----------------------------------END CODE--------------------------------------\n\n");
+
     }
 }
