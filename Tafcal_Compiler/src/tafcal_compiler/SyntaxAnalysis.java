@@ -14,8 +14,9 @@ import java.util.regex.Pattern;
  * @author Syed Mustafa Imam - 1812134
  */
 public class SyntaxAnalysis {
-
-    File file = new File("test.txt");
+//    String fileName = "C:/temp/sourcecode.txt";
+    String fileName = "test.txt";
+    File file = new File(fileName);
     ArrayList<String> identifiedTokens = new ArrayList<>();
     ArrayList<String> eachLineInArray = new ArrayList<>();
     ArrayList<String> errorInArray = new ArrayList<>();
@@ -24,16 +25,29 @@ public class SyntaxAnalysis {
     ArrayList<String> tokentype = new ArrayList<>();
     ArrayList<String> attributeValue = new ArrayList<>();
     ArrayList<String> lineNumber = new ArrayList<>();
-    String fileName = "test.txt";
     String inputCode = removeComments(fileName);
     int keyid = 21;
     int lineNo = 1;
-    boolean errorFlag = false;
+    boolean errorFlag = false; 
+    public String[] production_rules = {"E->E+T", "E->T", "T->T*F", "T->F", "F->(E)", "F->i"};
+    public String[][] slrTable = {
+        {"0", "s5", "", "", "s4", "", "", "1", "2", "3"},
+        {"1", "", "s6", "", "", "", "acpt", "", "", ""},
+        {"2", "", "r2", "s7", "", "r2", "r2", "", "", ""},
+        {"3", "", "r4", "r4", "", "r4", "r4", "", "", ""},
+        {"4", "s5", "", "", "s4", "", "", "8", "2", "3"},
+        {"5", "", "r6", "r6", "", "r6", "r6", "", "", ""},
+        {"6", "s5", "", "", "s4", "", "", "", "9", "3"},
+        {"7", "s5", "", "", "s4", "", "", "", "", "10"},
+        {"8", "", "s6", "", "", "s11", "", "", "", ""},
+        {"9", "", "r1", "s7", "", "r1", "r1", "", "", ""},
+        {"10", "", "r3", "r3", "", "r3", "r3", "", "", ""},
+        {"11", "", "r5", "r5", "", "r5", "r5", "", "", ""}};
 
     public void printSymbolTable() {
-      
+
         lineByLine();
-      System.out.println("\n**************************************<--Step 3&4-->*******************************************\n");
+        System.out.println("\n**************************************<--Step 3&4-->*******************************************\n");
         System.out.println("-------------------------------------Identifying Lexemes---------------------------------------");
         System.out.println("+==================================+=====================+====================================+\n\n");
         System.out.format("(%3s  , %-2s, %-2s)\n\n", "Token_Name", "Token_Type", "Attribute_Value");
@@ -47,27 +61,25 @@ public class SyntaxAnalysis {
         errorAnalysis();
         System.out.println("\n***************************************<--Step 6-->********************************************");
 
-            System.out.println("------------------------------------------ERRORS-----------------------------------------------\n");
-            if(errorFlag==true){
+        System.out.println("------------------------------------------ERRORS-----------------------------------------------\n");
+        if (errorFlag == true) {
             printError();
             System.out.println("-----------------------------------------------------------------------------------------------"
                     + "\n\nProgram terminated due to ERRORS...\nTo Run Program remove or Comment ERRORS\nResolve Error First...\n\n");
-        }else{
-                System.out.println("No Errors...");
-            }
-      System.out.println("\n\n\n*****************************************<--Step 7-->******************************************");
+        } else {
+            System.out.println("No Errors...");
+        }
+        System.out.println("\n\n\n*****************************************<--Step 7-->******************************************");
 
-            System.out.println("-----------------------------------------SYMBOL TABLE-----------------------------------------");
-            System.out.println("+==================================+=====================+====================================+");
-            System.out.format("|\t %-25s |\t %-15s |\t %-25s    |", "LEXEME", "TOKEN TYPE", "ATTRIBUTE VALUE");
-            System.out.println("\n+==================================+=====================+====================================+");
-            for (int i = 0; i < tokenName.size(); i++) {
-                System.out.format("|\t %-25s |\t %-15s |\t %-25s    |\n", tokenName.get(i), tokentype.get(i), attributeValue.get(i));
-               System.out.println("|__________________________________|_____________________|____________________________________|");
-            }
-       
-              
-        
+        System.out.println("-----------------------------------------SYMBOL TABLE-----------------------------------------");
+        System.out.println("+==================================+=====================+====================================+");
+        System.out.format("|\t %-25s |\t %-15s |\t %-25s    |", "LEXEME", "TOKEN TYPE", "ATTRIBUTE VALUE");
+        System.out.println("\n+==================================+=====================+====================================+");
+        for (int i = 0; i < tokenName.size(); i++) {
+            System.out.format("|\t %-25s |\t %-15s |\t %-25s    |\n", tokenName.get(i), tokentype.get(i), attributeValue.get(i));
+            System.out.println("|__________________________________|_____________________|____________________________________|");
+        }
+
     }
 
     public void errorAnalysis() {
@@ -120,9 +132,17 @@ public class SyntaxAnalysis {
     }
 
     public String readFile(String fileName) {
-        System.out.println("\n********************************WELCOME TO MUSTAFA COMPILER*************************************");
+        System.out.println("\n********************************WELCOME TO TAFCAL COMPILER*************************************");
+        System.out.println("***\nThis Compiler is Made by Syed Mustafa Imam. As the final Project of Compiler Construction "
+                + "course given by Sir Khawaja.\n"
+                + "I have named my compiler 'TAFCAL' as 'TAF' is my nick Name and 'CAL' is for Compiler.\n"
+                + "My compiler for TAFCAL language, which is defined by Sir Khawaja, it can recognize lexeme and  it will\n"
+                + "decide that the lexeme should go into the symbol table or not.It also assigns the token type and \n"
+                + "attributes value to each token. This TAFCAL Compiler can also find some basic Errors.It can also extract\n"
+                + "the values from the SLR(1) parse table and also from the given CFG.\n***\nThe keywords for this language are:\n"
+                + "begin, end, if, then, else, int, float, char, string.");
         System.out.println("\n***************************************<--Step 1-->*********************************************\n");
-          System.out.println("----------------------------------Reading Input Form File--------------------------------------");
+        System.out.println("----------------------------------Reading Input Form File--------------------------------------");
         final File file = new File(fileName);
         char[] buffer = null;
         System.out.println("Creating or Finding File...\n");
@@ -182,10 +202,14 @@ public class SyntaxAnalysis {
     }
 
     static String[] stringToArray(String stname) {
-        String[] strarr = new String[stname.length()];
+        String[] strarr = new String[stname.length()+1];
+        int j =0;
         for (int i = 0; i < stname.length(); i++) {
             strarr[i] = Character.toString(stname.charAt(i));
+        j++;
         }
+                    strarr[j] = "\n";
+
         return strarr;
     }
 
@@ -633,7 +657,7 @@ public class SyntaxAnalysis {
     public void lineByLine() {
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader("test.txt"));
+            reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
             eachLineInArray.add(null);
             eachLineInArray.add(line);
@@ -653,24 +677,20 @@ public class SyntaxAnalysis {
         }
 
         System.out.println("--------------------------------------------END CODE-------------------------------------------\n\n");
-              System.out.println("\n***************************************<--Step 2-->********************************************");
+        System.out.println("\n***************************************<--Step 2-->********************************************");
 
         System.out.println("------------------------------INPUT CODE Without Spaces and Comments----------------------------");
 
 //        String inputCommentsWithout = removeComments(inputCode);
 //        String [] input = stringToArray(inputCommentsWithout);
-        
-                String rem_comments = inputCode.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\\n|\\s|", "");
-                        String [] myCode = stringToArray(rem_comments);
+        String rem_comments = inputCode.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\\n|\\s|", "");
+        String[] myCode = stringToArray(rem_comments);
 
-                
-        
         for (int i = 0; i < myCode.length; i++) {
             System.out.println(myCode[i]);
         }
-                System.out.println("--------------------------------------------END CODE-------------------------------------------\n\n");
+        System.out.println("--------------------------------------------END CODE-------------------------------------------\n\n");
 
-        
     }
 
     Scanner input = new Scanner(System.in);
@@ -685,18 +705,18 @@ public class SyntaxAnalysis {
     }
 
     public void getSLRTable() {
-  System.out.println("\n\n\n**************************************************<--Step 8-->*************************************************");
+        System.out.println("\n\n\n**************************************************<--Step 8-->*************************************************");
         System.out.println("----------------------------------------------SLR(1) Parsing Table---------------------------------------------");
         System.out.println("|==========|==========|==========|==========|==========|==========|==========|==========|==========|==========|");
-         System.out.format("| %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    |\n", "State", "id", "+", "*", "(", ")", "$", "E", "T", "F");
-         System.out.format("|==========|==========|==========|==========|==========|==========|==========|==========|==========|==========|\n");
+        System.out.format("| %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    |\n", "State", "id", "+", "*", "(", ")", "$", "E", "T", "F");
+        System.out.format("|==========|==========|==========|==========|==========|==========|==========|==========|==========|==========|\n");
         for (int arr1 = 0; arr1 < slrTable.length; arr1++) {
             for (int arr2 = 0; arr2 < slrTable[arr1].length; arr2++) {
 
                 System.out.format("| %5s    ", slrTable[arr1][arr2]);
             }
             System.out.print("|\n");
-        System.out.println("|__________|__________|__________|__________|__________|__________|__________|__________|__________|__________|");
+            System.out.println("|__________|__________|__________|__________|__________|__________|__________|__________|__________|__________|");
         }
     }
 
@@ -704,7 +724,7 @@ public class SyntaxAnalysis {
         boolean flag = true;
 
         int arrayIndexOfLexeme;
-          System.out.println("----------------------------------------------------SLR(1) Parsing-------------------------------------------------");
+        System.out.println("----------------------------------------------------SLR(1) Parsing-------------------------------------------------");
 
         while (flag != false) {
             System.out.print("Enter state No. from table  :\t");
@@ -830,35 +850,21 @@ public class SyntaxAnalysis {
         }
 
     }
-                int i =0;
+    int i = 0;
 
-    public String getAttValue(String lexeme){
-int j= 0;
-        if(tokenName.contains(lexeme)==true){
-        while(!lexeme.equals(tokenName.get(j))){
-        j++;
-        i++;
+    public String getAttValue(String lexeme) {
+        int j = 0;
+        if (tokenName.contains(lexeme) == true) {
+            while (!lexeme.equals(tokenName.get(j))) {
+                j++;
+                i++;
+            }
+
+            return String.valueOf(j + 1);
+        } else {
+            return String.valueOf(tokenName.size() + 1);
         }
-        
-        return String.valueOf(j+1);
-        }else{
-        return String.valueOf(tokenName.size()+1);
-        }
-    
+
     }
 
-    public String[] production_rules = {"E->E+T", "E->T", "T->T*F", "T->F", "F->(E)", "F->i"};
-    public String[][] slrTable = {
-        {"0", "s5", "", "", "s4", "", "", "1", "2", "3"},
-        {"1", "", "s6", "", "", "", "acpt", "", "", ""},
-        {"2", "", "r2", "s7", "", "r2", "r2", "", "", ""},
-        {"3", "", "r4", "r4", "", "r4", "r4", "", "", ""},
-        {"4", "s5", "", "", "s4", "", "", "8", "2", "3"},
-        {"5", "", "r6", "r6", "", "r6", "r6", "", "", ""},
-        {"6", "s5", "", "", "s4", "", "", "", "9", "3"},
-        {"7", "s5", "", "", "s4", "", "", "", "", "10"},
-        {"8", "", "s6", "", "", "s11", "", "", "", ""},
-        {"9", "", "r1", "s7", "", "r1", "r1", "", "", ""},
-        {"10", "", "r3", "r3", "", "r3", "r3", "", "", ""},
-        {"11", "", "r5", "r5", "", "r5", "r5", "", "", ""}};
 }
