@@ -26,11 +26,12 @@ public class SyntaxAnalysis {
     ArrayList<String> lineNumber = new ArrayList<>();
     String fileName = "test.txt";
     String inputCode = removeComments(fileName);
-    int keyid = 0;
+    int keyid = 21;
     int lineNo = 1;
     boolean errorFlag = false;
 
     public void printSymbolTable() {
+      
         lineByLine();
       System.out.println("\n**************************************<--Step 3&4-->*******************************************\n");
         System.out.println("-------------------------------------Identifying Lexemes---------------------------------------");
@@ -44,13 +45,16 @@ public class SyntaxAnalysis {
         System.out.println("----------------------------------------------END---------------------------------------------\n\n");
 
         errorAnalysis();
-        System.out.println("\n***************************************<--Step 6-->********************************************\n");
+        System.out.println("\n***************************************<--Step 6-->********************************************");
 
-            System.out.println("\n\n------------------------------------------ERRORS-----------------------------------------------\n");
+            System.out.println("------------------------------------------ERRORS-----------------------------------------------\n");
+            if(errorFlag==true){
             printError();
             System.out.println("-----------------------------------------------------------------------------------------------"
                     + "\n\nProgram terminated due to ERRORS...\nTo Run Program remove or Comment ERRORS\nResolve Error First...\n\n");
-        
+        }else{
+                System.out.println("No Errors...");
+            }
       System.out.println("\n\n\n*****************************************<--Step 7-->******************************************");
 
             System.out.println("-----------------------------------------SYMBOL TABLE-----------------------------------------");
@@ -117,7 +121,7 @@ public class SyntaxAnalysis {
 
     public String readFile(String fileName) {
         System.out.println("\n********************************WELCOME TO MUSTAFA COMPILER*************************************");
-        System.out.println("\n***************************************<--Step 1&2-->******************************************\n");
+        System.out.println("\n***************************************<--Step 1-->*********************************************\n");
           System.out.println("----------------------------------Reading Input Form File--------------------------------------");
         final File file = new File(fileName);
         char[] buffer = null;
@@ -557,7 +561,7 @@ public class SyntaxAnalysis {
                             keyid++;
                             tokenForError.add(lexeme);
                             toSymbolTable(lexeme, "ID", Integer.toString(attributeValue.size() + 1));
-                            System.out.format("(%3s  , %-2s, %-2s)\n\n", lexeme, "ID", Integer.toString(attributeValue.size()));
+                            System.out.format("(%3s  , %-2s, %-2s)\n\n", lexeme, "ID", getAttValue(lexeme));
                             i++;
                             lexeme = "";
                             break;
@@ -585,7 +589,7 @@ public class SyntaxAnalysis {
                 Matcher m = string_pattern.matcher(lexeme);
                 if (m.matches() == true) {
                     toSymbolTable(lexeme, "sLiteral", Integer.toString(attributeValue.size() + 1));
-                    System.out.format("(%3s  , %-2s, %-2s)\n\n", lexeme, "sLiteral", Integer.toString(attributeValue.size()));
+                    System.out.format("(%3s  , %-2s, %-2s)\n\n", lexeme, "sLiteral", getAttValue(lexeme));
                     tokenForError.add(lexeme);
                     lexeme = "";
                     i++;
@@ -611,7 +615,7 @@ public class SyntaxAnalysis {
                 Matcher m = p.matcher(lexeme);
                 if (m.matches() == true) {
                     toSymbolTable(lexeme, "uInt", Integer.toString(attributeValue.size() + 1));
-                    System.out.format("(%3s  , %-2s, %-2s)\n\n", lexeme, "uInt", Integer.toString(attributeValue.size()));
+                    System.out.format("(%3s  , %-2s, %-2s)\n\n", lexeme, "uInt", getAttValue(lexeme));
                     tokenForError.add(lexeme);
                     i++;
                     lexeme = "";
@@ -649,7 +653,24 @@ public class SyntaxAnalysis {
         }
 
         System.out.println("--------------------------------------------END CODE-------------------------------------------\n\n");
+              System.out.println("\n***************************************<--Step 2-->********************************************");
 
+        System.out.println("------------------------------INPUT CODE Without Spaces and Comments----------------------------");
+
+//        String inputCommentsWithout = removeComments(inputCode);
+//        String [] input = stringToArray(inputCommentsWithout);
+        
+                String rem_comments = inputCode.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\\n|\\s|", "");
+                        String [] myCode = stringToArray(rem_comments);
+
+                
+        
+        for (int i = 0; i < myCode.length; i++) {
+            System.out.println(myCode[i]);
+        }
+                System.out.println("--------------------------------------------END CODE-------------------------------------------\n\n");
+
+        
     }
 
     Scanner input = new Scanner(System.in);
@@ -808,6 +829,22 @@ public class SyntaxAnalysis {
             }
         }
 
+    }
+                int i =0;
+
+    public String getAttValue(String lexeme){
+int j= 0;
+        if(tokenName.contains(lexeme)==true){
+        while(!lexeme.equals(tokenName.get(j))){
+        j++;
+        i++;
+        }
+        
+        return String.valueOf(j+1);
+        }else{
+        return String.valueOf(tokenName.size()+1);
+        }
+    
     }
 
     public String[] production_rules = {"E->E+T", "E->T", "T->T*F", "T->F", "F->(E)", "F->i"};
