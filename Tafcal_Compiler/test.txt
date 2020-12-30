@@ -1,6 +1,39 @@
-string abc 2
-char "Syed" abc def abc 3
-string char 3
-2
-"Syed"
+/*
 
+This Compiler is Made by Syed Mustafa Imam. As the final Project of Compiler Construction course given by Sir Khawaja.
+I have named my compiler 'TAFCAL' as 'TAF' is my nick Name and 'CAL' is for Compiler.
+My compiler for TAFCAL language, which is defined by Sir Khawaja, it can recognize lexeme and  it will
+decide that the lexeme should go into the symbol table or not.It also assigns the token type and 
+attributes value to each token. This TAFCAL Compiler can also find some basic Errors.It can also extract
+the values from the SLR(1) parse table and also from the given CFG.
+***
+The keywords for this language are:
+begin, end, if, then, else, int, float, char, string.
+
+*/
+// This is my Orignal Txt File
+
+begin;
+int var1= 0;
+if( var2 <> 1 ) then
+var3 = 2 + 3;
+else{
+var4 = 4 - 5 + 6;
+};
+1812135musta
+string name = "Syed_Mustafa_Imam" ;
+string regNo = "1812134" ;
+i++
+float i= 7;
+if (i <= 8 ) then {
+char arry = str;
+123asdfas
+
+if( arry > var5 ){
+end;
+}
+}
+// Keywords 
+//---------------
+
+// this is made by Mustafa Imam 1812134
