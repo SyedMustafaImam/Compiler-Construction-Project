@@ -10,9 +10,12 @@ public class Tafcal_Compiler {
         SyntaxAnalysis filefun = new SyntaxAnalysis();
         
         filefun.printSymbolTable();
-        filefun.getSLRTable();
         filefun.getCFGRules();
         filefun.slrParsing();
+        System.out.println("----------------------------------------------------END--------------------------------------------------------------");
+        System.out.println("\n\n\nThankyou Sir for Giving us an opputunity to enhance our coding skills."
+                + "\nI learned a lot during this course."
+                + "\n\nTHANKYOU SIR\nYours faithful Student\nSyed Mustafa Imam\n1812134\nBSCS(5A).");
         
     
     }

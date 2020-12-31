@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import jdk.nashorn.internal.parser.TokenType;
 
 /**
  *
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
  */
 public class SyntaxAnalysis {
 //    String fileName = "C:/temp/sourcecode.txt";
+
     String fileName = "test.txt";
     File file = new File(fileName);
     ArrayList<String> identifiedTokens = new ArrayList<>();
@@ -28,8 +30,8 @@ public class SyntaxAnalysis {
     String inputCode = removeComments(fileName);
     int keyid = 21;
     int lineNo = 1;
-    boolean errorFlag = false; 
-    public String[] production_rules = {"E->E+T", "E->T", "T->T*F", "T->F", "F->(E)", "F->i"};
+    boolean errorFlag = false;
+    public String[] production_rules = {"E->E+T", "E->T", "T->T*F", "T->F", "F->(E)", "F->id"};
     public String[][] slrTable = {
         {"0", "s5", "", "", "s4", "", "", "1", "2", "3"},
         {"1", "", "s6", "", "", "", "acpt", "", "", ""},
@@ -43,10 +45,11 @@ public class SyntaxAnalysis {
         {"9", "", "r1", "s7", "", "r1", "r1", "", "", ""},
         {"10", "", "r3", "r3", "", "r3", "r3", "", "", ""},
         {"11", "", "r5", "r5", "", "r5", "r5", "", "", ""}};
+    String enter;
 
     public void printSymbolTable() {
-
         lineByLine();
+        systemWait("CLICK on Console and Press ENTER to continue to step 3 and 4 to identify RELOP, OTOP and Keywords...");
         System.out.println("\n**************************************<--Step 3&4-->*******************************************\n");
         System.out.println("-------------------------------------Identifying Lexemes---------------------------------------");
         System.out.println("+==================================+=====================+====================================+\n\n");
@@ -57,10 +60,9 @@ public class SyntaxAnalysis {
         identifyStringLiterals(stringToArray(inputCode));
         identifyUnsignedInteger(stringToArray(inputCode));
         System.out.println("----------------------------------------------END---------------------------------------------\n\n");
-
+        systemWait("Press ENTER to check for error if any...");
         errorAnalysis();
         System.out.println("\n***************************************<--Step 6-->********************************************");
-
         System.out.println("------------------------------------------ERRORS-----------------------------------------------\n");
         if (errorFlag == true) {
             printError();
@@ -69,8 +71,9 @@ public class SyntaxAnalysis {
         } else {
             System.out.println("No Errors...");
         }
-        System.out.println("\n\n\n*****************************************<--Step 7-->******************************************");
+        systemWait("CLICK on Console and Press ENTER to continue to step 7 to Print Symbol table from Array List...");
 
+        System.out.println("\n\n\n*****************************************<--Step 7-->******************************************");
         System.out.println("-----------------------------------------SYMBOL TABLE-----------------------------------------");
         System.out.println("+==================================+=====================+====================================+");
         System.out.format("|\t %-25s |\t %-15s |\t %-25s    |", "LEXEME", "TOKEN TYPE", "ATTRIBUTE VALUE");
@@ -79,7 +82,7 @@ public class SyntaxAnalysis {
             System.out.format("|\t %-25s |\t %-15s |\t %-25s    |\n", tokenName.get(i), tokentype.get(i), attributeValue.get(i));
             System.out.println("|__________________________________|_____________________|____________________________________|");
         }
-
+        System.out.println("\n\n\n");
     }
 
     public void errorAnalysis() {
@@ -111,7 +114,7 @@ public class SyntaxAnalysis {
                             i++;
                         }
                         errorFlag = true;
-                        String str = "Line No. " + j + "\tError: " + lexeme;
+                        String str = String.format("Line No. %-5s \t Error: %-20s  \t Error Message: %-25s", j, lexeme, "Please declare the identifiers or keywords Proprly! ");
                         errorInArray.add(str);
                     }
                     lexeme = "";
@@ -131,16 +134,31 @@ public class SyntaxAnalysis {
         }
     }
 
+    public void systemWait(String strings) {
+        Scanner in = new Scanner(System.in);
+
+        System.out.println(strings);
+        enter = in.nextLine();
+
+    }
+
     public String readFile(String fileName) {
+
         System.out.println("\n********************************WELCOME TO TAFCAL COMPILER*************************************");
-        System.out.println("***\nThis Compiler is Made by Syed Mustafa Imam. As the final Project of Compiler Construction "
-                + "course given by Sir Khawaja.\n"
+    System.out.println("------------------------------------------------------------------------------------------------------------------------"
+            + "\n***\nThis Compiler is Made by Syed Mustafa Imam. As the final Project of Compiler Construction "
+                               + "course given by Sir Khawaja.\n"
                 + "I have named my compiler 'TAFCAL' as 'TAF' is my nick Name and 'CAL' is for Compiler.\n"
                 + "My compiler for TAFCAL language, which is defined by Sir Khawaja, it can recognize lexeme and  it will\n"
                 + "decide that the lexeme should go into the symbol table or not.It also assigns the token type and \n"
                 + "attributes value to each token. This TAFCAL Compiler can also find some basic Errors.It can also extract\n"
-                + "the values from the SLR(1) parse table and also from the given CFG.\n***\nThe keywords for this language are:\n"
-                + "begin, end, if, then, else, int, float, char, string.");
+                + "the values from the SLR(1) parse table and also from the given CFG.\n***\nThe reserved keywords for this language are:\n"
+                + "begin, end, if, then, else, int, float, char, string.\n\n"
+                + "***"
+                + "\nNOTE: TO EXECUTE EACH STEP, FIRST CLICK ON CONSOLE AND THEN PRESS ENTER AFTER EVERY STEP\n"
+                + "------------------------------------------------------------------------------------------------------------------------");
+
+        systemWait("CLICK on Console and Press ENTER to continue to step 1 to read or create file...");
         System.out.println("\n***************************************<--Step 1-->*********************************************\n");
         System.out.println("----------------------------------Reading Input Form File--------------------------------------");
         final File file = new File(fileName);
@@ -176,15 +194,11 @@ public class SyntaxAnalysis {
 
     public void toSymbolTable(String Name, String Type, String value) {
         String tokenNames = Name, tokenTypes = Type, atValue = value;
-
         if (tokenName.contains(tokenNames) == false) {
-
             tokenName.add(tokenNames);
             tokentype.add(tokenTypes);
             attributeValue.add(atValue);
-
         }
-
     }
 
     public String removeComments(String fileName) {
@@ -202,20 +216,18 @@ public class SyntaxAnalysis {
     }
 
     static String[] stringToArray(String stname) {
-        String[] strarr = new String[stname.length()+1];
-        int j =0;
+        String[] strarr = new String[stname.length() + 1];
+        int j = 0;
         for (int i = 0; i < stname.length(); i++) {
             strarr[i] = Character.toString(stname.charAt(i));
-        j++;
+            j++;
         }
-                    strarr[j] = "\n";
-
+        strarr[j] = "\n";
         return strarr;
     }
 
     public void identifyRelocAndKeywords(String[] strarr) {
         final int arrayLength = strarr.length;
-
         for (int i = 0; i < arrayLength; i++) {
             if (strarr[i].equals("=") || strarr[i].equals(">") || strarr[i].equals("<")) {
                 i++;
@@ -227,28 +239,24 @@ public class SyntaxAnalysis {
                         toSymbolTable("<=", "RELOP", "LE");
                         tokenForError.add("<=");
                         System.out.format("(%3s  , %-2s, %-2s)\n\n", "Token_Name", "<=", "RELOP", "LE");
-
                     }
                     if ((d1 + d2).equals(">=")) {
                         strarr[i] = d1 + d2 + "\tGE --Relop Identified!";
                         toSymbolTable(">=", "RELOP", "GE");
                         System.out.format("(%3s  , %-2s, %-2s)\n\n", ">=", "RELOP", "GE");
                         tokenForError.add(">=");
-
                     }
                     if ((d1 + d2).equals("==")) {
                         strarr[i] = d1 + d2 + "\tEQ --Relop Identified!";
                         toSymbolTable("==", "RELOP", "EQ");
                         System.out.format("(%3s  , %-2s, %-2s)\n\n", "==", "RELOP", "EQ");
                         tokenForError.add("==");
-
                     }
                     if ((d1 + d2).equals("<>")) {
                         strarr[i] = d1 + d2 + "\tNE --Relop Identified!";
                         toSymbolTable("<>", "RELOP", "NE");
                         System.out.format("(%3s  , %-2s, %-2s)\n\n", "<>", "RELOP", "NE");
                         tokenForError.add("<>");
-
                     }
                 } else {
                     i--;
@@ -271,7 +279,6 @@ public class SyntaxAnalysis {
                     System.out.format("(%3s  , %-2s, %-2s)\n\n", "<", "RELOP", "LT");
                     tokenForError.add("<");
                     i--;
-
                 } else {
                     continue;
                 }
@@ -528,8 +535,8 @@ public class SyntaxAnalysis {
         String lexeme = "";
         Pattern identifer_pattern = Pattern.compile("^([a-zA-Z_$][a-zA-Z\\d_$]*)$");
         int i = 0;
+        systemWait("CLICK on Console and Press ENTER to continue to step 5 to identify Identifiers...");
         System.out.println("\n***************************************<--Step 5-->********************************************\n");
-
         while (strarr.length != i) {
             String temp = strarr[i];
             if ((temp.equals("=") || Character.isWhitespace(temp.charAt(0)) == true || temp.contentEquals(";"))) {
@@ -603,6 +610,8 @@ public class SyntaxAnalysis {
     }
 
     public void identifyStringLiterals(String[] starr) {
+        systemWait("CLICK on Console and Press ENTER to continue to step 6 to identify String Literals and Unsigned Integers...");
+
         System.out.println("\n***************************************<--Step 6-->********************************************\n");
         Pattern string_pattern = Pattern.compile("^\"[0-9a-z A-Z_]*\"$");
         String lexeme = "";
@@ -670,33 +679,34 @@ public class SyntaxAnalysis {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        systemWait("CLICK on Console and Press ENTER to continue"
+                + " to see our input code with line number...");
         System.out.println("----------------------------------INPUT CODE WITH LINE NUMBER----------------------------------");
-
         for (int i = 1; i < eachLineInArray.size(); i++) {
             System.out.println(i + ". " + eachLineInArray.get(i));
         }
-
         System.out.println("--------------------------------------------END CODE-------------------------------------------\n\n");
+        systemWait("CLICK on Console and Press ENTER to continue to step 2...");
         System.out.println("\n***************************************<--Step 2-->********************************************");
-
         System.out.println("------------------------------INPUT CODE Without Spaces and Comments----------------------------");
-
 //        String inputCommentsWithout = removeComments(inputCode);
 //        String [] input = stringToArray(inputCommentsWithout);
         String rem_comments = inputCode.replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)|\\n|\\s|", "");
         String[] myCode = stringToArray(rem_comments);
-
         for (int i = 0; i < myCode.length; i++) {
             System.out.println(myCode[i]);
         }
         System.out.println("--------------------------------------------END CODE-------------------------------------------\n\n");
 
     }
-
     Scanner input = new Scanner(System.in);
 
     public void generatingCFGRules() {
-        System.out.println("\n\n\n-----------------------------------------------------CFG RULES----------------------------------------------------");
+        systemWait("CLICK on Console and Press ENTER to continue to step 8 to print Production Rules stored in the array...");
+
+        System.out.println("\n\n\n****************************************************<--Step 8-->**************************************************");
+
+        System.out.println("-----------------------------------------------------CFG RULES----------------------------------------------------");
         System.out.println("Rule: ");
         for (int arr = 0; arr < production_rules.length; arr++) {
             System.out.println("\tNo." + (arr + 1) + " :" + production_rules[arr]);
@@ -705,7 +715,6 @@ public class SyntaxAnalysis {
     }
 
     public void getSLRTable() {
-        System.out.println("\n\n\n**************************************************<--Step 8-->*************************************************");
         System.out.println("----------------------------------------------SLR(1) Parsing Table---------------------------------------------");
         System.out.println("|==========|==========|==========|==========|==========|==========|==========|==========|==========|==========|");
         System.out.format("| %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    | %5s    |\n", "State", "id", "+", "*", "(", ")", "$", "E", "T", "F");
@@ -722,16 +731,15 @@ public class SyntaxAnalysis {
 
     public void slrParsing() {
         boolean flag = true;
-
+        systemWait("\n\n\nCLICK on Console and Press ENTER to continue to step 8 to print SLR(1) Parsing table from the 2d Array and Fetching the specific action from the SLR table...");
+        getSLRTable();
         int arrayIndexOfLexeme;
         System.out.println("----------------------------------------------------SLR(1) Parsing-------------------------------------------------");
-
         while (flag != false) {
             System.out.print("Enter state No. from table  :\t");
             int state = Integer.parseInt(input.nextLine());
             System.out.print("Enter lexeme from table     :\t");
             String lexeme = input.nextLine();
-
             switch (lexeme) {
                 case "id":
                     arrayIndexOfLexeme = 1;
@@ -770,7 +778,6 @@ public class SyntaxAnalysis {
                     System.out.println("\nOutput: error");
                 } else {
                     System.out.println("\nOutput: " + slrTable[state][arrayIndexOfLexeme]);
-
                 }
             } else {
                 flag = true;
@@ -784,71 +791,56 @@ public class SyntaxAnalysis {
     public void getCFGRules() {
         generatingCFGRules();
         boolean flag = true;
-
         while (flag != false) {
-
             System.out.print("Enter any Non-Terminal or Rule No. from these Rules     :\t");
             String nonTerminal = input.nextLine();
-
             switch (nonTerminal) {
-
                 case "E":
                     System.out.println("No.1 :" + production_rules[0]);
                     System.out.println("No.2 :" + production_rules[1]);
                     flag = false;
                     break;
-
                 case "T":
                     System.out.println("No.3 :" + production_rules[2]);
                     System.out.println("No.4 :" + production_rules[3]);
                     flag = false;
                     break;
-
                 case "F":
                     System.out.println("No.5 :" + production_rules[4]);
                     System.out.println("No.6 :" + production_rules[5]);
                     flag = false;
                     break;
-
                 case "1":
                     System.out.println("No.1 :" + production_rules[0]);
                     flag = false;
                     break;
-
                 case "2":
                     System.out.println("No.2 :" + production_rules[1]);
                     flag = false;
                     break;
-
                 case "3":
                     System.out.println("No.3 :" + production_rules[2]);
                     flag = false;
                     break;
-
                 case "4":
                     System.out.println("No.4 :" + production_rules[3]);
                     flag = false;
                     break;
-
                 case "5":
                     System.out.println("No.5 :" + production_rules[4]);
                     flag = false;
                     break;
-
                 case "6":
                     System.out.println("No.6 :" + production_rules[5]);
                     flag = false;
                     break;
-
                 default:
                     flag = true;
                     System.out.println("\n\t\t\t\t\t\t   XXX ERROR XXX\n"
                             + "------------------------------------------------------------------------------------------------------------------\n"
                             + "Please Enter Correct Production Rule from the Production Rules...\n\n");
-
             }
         }
-
     }
     int i = 0;
 
