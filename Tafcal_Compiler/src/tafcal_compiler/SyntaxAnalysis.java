@@ -613,7 +613,8 @@ public class SyntaxAnalysis {
         systemWait("CLICK on Console and Press ENTER to continue to step 6 to identify String Literals and Unsigned Integers...");
 
         System.out.println("\n***************************************<--Step 6-->********************************************\n");
-        Pattern string_pattern = Pattern.compile("^\"[0-9a-z A-Z_]*\"$");
+        Pattern string_pattern = Pattern.compile("^\"[0-9a-zA-Z\\a-z_]*\"$");
+//        Pattern string_pattern = Pattern.compile("^\"[0-9a-z\\n A-Z_]*\"$ | . | [A-Z]* . \\n [a-z] | \\D | \\s | \\S | \\w | \\W | \\b | \\B | [^\\w]");
         String lexeme = "";
         int i = 0;
         while (starr.length != i) {

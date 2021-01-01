@@ -12,7 +12,8 @@ begin, end, if, then, else, int, float, char, string.
 
 */
 // This is my Orignal Txt File
-
+arr[] 0.5
+"SyedMustafa\n1812134"
 begin;
 int var1= 0;
 if( var2 <> 1 ) then
