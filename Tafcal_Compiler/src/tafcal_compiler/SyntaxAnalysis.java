@@ -76,7 +76,7 @@ public class SyntaxAnalysis {
         System.out.println("\n\n\n*****************************************<--Step 7-->******************************************");
         System.out.println("-----------------------------------------SYMBOL TABLE-----------------------------------------");
         System.out.println("+==================================+=====================+====================================+");
-        System.out.format("|\t %-25s |\t %-15s |\t %-25s    |", "LEXEME", "TOKEN TYPE", "ATTRIBUTE VALUE");
+        System.out.format("|\t %-25s |\t %-15s |\t %-25s    |", "Token Name", "TOKEN TYPE", "ATTRIBUTE VALUE");
         System.out.println("\n+==================================+=====================+====================================+");
         for (int i = 0; i < tokenName.size(); i++) {
             System.out.format("|\t %-25s |\t %-15s |\t %-25s    |\n", tokenName.get(i), tokentype.get(i), attributeValue.get(i));
@@ -145,9 +145,9 @@ public class SyntaxAnalysis {
     public String readFile(String fileName) {
 
         System.out.println("\n********************************WELCOME TO TAFCAL COMPILER*************************************");
-    System.out.println("------------------------------------------------------------------------------------------------------------------------"
-            + "\n***\nThis Compiler is Made by Syed Mustafa Imam. As the final Project of Compiler Construction "
-                               + "course given by Sir Khawaja.\n"
+        System.out.println("------------------------------------------------------------------------------------------------------------------------"
+                + "\n***\nThis Compiler is Made by Syed Mustafa Imam. As the final Project of Compiler Construction "
+                + "course given by Sir Khawaja.\n"
                 + "I have named my compiler 'TAFCAL' as 'TAF' is my nick Name and 'CAL' is for Compiler.\n"
                 + "My compiler for TAFCAL language, which is defined by Sir Khawaja, it can recognize lexeme and  it will\n"
                 + "decide that the lexeme should go into the symbol table or not.It also assigns the token type and \n"
@@ -732,60 +732,91 @@ public class SyntaxAnalysis {
 
     public void slrParsing() {
         boolean flag = true;
-        systemWait("\n\n\nCLICK on Console and Press ENTER to continue to step 8 to print SLR(1) Parsing table from the 2d Array and Fetching the specific action from the SLR table...");
+        systemWait("\n\n\nCLICK on Console and Press ENTER to continue to step 8 to print SLR(1) \nParsing table from the 2d Array and Fetching the specific action from the SLR table...");
         getSLRTable();
         int arrayIndexOfLexeme;
         System.out.println("----------------------------------------------------SLR(1) Parsing-------------------------------------------------");
         while (flag != false) {
             System.out.print("Enter state No. from table  :\t");
-            int state = Integer.parseInt(input.nextLine());
+            String state1 = input.nextLine();
             System.out.print("Enter lexeme from table     :\t");
             String lexeme = input.nextLine();
-            switch (lexeme) {
-                case "id":
-                    arrayIndexOfLexeme = 1;
-                    break;
-                case "+":
-                    arrayIndexOfLexeme = 2;
-                    break;
-                case "*":
-                    arrayIndexOfLexeme = 3;
-                    break;
-                case "(":
-                    arrayIndexOfLexeme = 4;
-                    break;
-                case ")":
-                    arrayIndexOfLexeme = 5;
-                    break;
-                case "$":
-                    arrayIndexOfLexeme = 6;
-                    break;
-                case "E":
-                    arrayIndexOfLexeme = 7;
-                    break;
-                case "T":
-                    arrayIndexOfLexeme = 8;
-                    break;
-                case "F":
-                    arrayIndexOfLexeme = 9;
-                    break;
-                default:
-                    arrayIndexOfLexeme = 10;
-                    break;
-            }
-            if (state >= 0 && state <= 11) {
-                flag = false;
-                if (slrTable[state][arrayIndexOfLexeme].equals("")) {
-                    System.out.println("\nOutput: error");
-                } else {
-                    System.out.println("\nOutput: " + slrTable[state][arrayIndexOfLexeme]);
+            if (state1.matches("[0-9]*") && (lexeme.equals("id") || lexeme.equals("+") || lexeme.equals("*") || lexeme.equals("(") || lexeme.equals(")") || lexeme.equals("$") || lexeme.equals("E") || lexeme.equals("T") || lexeme.equals("F"))) {
+                switch (lexeme) {
+                    case "id":
+                        arrayIndexOfLexeme = 1;
+                        break;
+                    case "+":
+                        arrayIndexOfLexeme = 2;
+                        break;
+                    case "*":
+                        arrayIndexOfLexeme = 3;
+                        break;
+                    case "(":
+                        arrayIndexOfLexeme = 4;
+                        break;
+                    case ")":
+                        arrayIndexOfLexeme = 5;
+                        break;
+                    case "$":
+                        arrayIndexOfLexeme = 6;
+                        break;
+                    case "E":
+                        arrayIndexOfLexeme = 7;
+                        break;
+                    case "T":
+                        arrayIndexOfLexeme = 8;
+                        break;
+                    case "F":
+                        arrayIndexOfLexeme = 9;
+                        break;
+                    default:
+                        arrayIndexOfLexeme = 10;
+                        break;
                 }
+
+                int state = Integer.parseInt(state1);
+                if (state >= 0 && state <= 11) {
+                    flag = false;
+                    if (slrTable[state][arrayIndexOfLexeme].equals("")) {
+                        System.out.println("\nOutput: error");
+                        System.out.println("\n\n--------------------------------------"
+                                + "\nIf you want to parse again press (y) OR to exit (e): ");
+                        String toExit = input.nextLine();
+                        if (toExit.equalsIgnoreCase("y")) {
+                            System.out.println("\n\n\n\n");
+
+                            flag = true;
+                        } else {
+                            flag = false;
+                        }
+                    } else {
+                        System.out.println("\nOutput: " + slrTable[state][arrayIndexOfLexeme]);
+                        System.out.println("\n\n--------------------------------------"
+                                + "\nIf you want to parse again press (y) OR to exit (e): ");
+                        String toExit = input.nextLine();
+                        if (toExit.equalsIgnoreCase("y")) {
+                            System.out.println("\n\n\n\n");
+
+                            flag = true;
+                        } else {
+                            flag = false;
+                        }
+                    }
+                } else {
+                    flag = true;
+                    System.out.println("\n\t\t\t\t\t\t   XXX ERROR XXX\n"
+                            + "------------------------------------------------------------------------------------------------------------------\n"
+                            + "Please Enter Correct Sate No. or Lexeme from the SLR Table...\n\n");
+                }
+
             } else {
                 flag = true;
                 System.out.println("\n\t\t\t\t\t\t   XXX ERROR XXX\n"
                         + "------------------------------------------------------------------------------------------------------------------\n"
                         + "Please Enter Correct Sate No. or Lexeme from the SLR Table...\n\n");
             }
+
         }
     }
 
